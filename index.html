@@ -7,13 +7,19 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { margin: 0; font-family: sans-serif; background: #f4f6f8; color: #333; }
-        header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; }
+        header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Главное меню - кнопки в 2 колонки */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .product-btn { background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        /* Сетка категорий */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
+        
+        /* Кнопки разделов */
+        .category-btn { background: #00796b; color: white; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: none; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+        .category-btn:active { background: #004d40; transform: scale(0.95); }
 
-        /* СТРАНИЦА ТОВАРА - СТРОГО В ОДНУ КОЛОНКУ */
+        /* Кнопки товаров */
+        .product-btn { background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #ddd; color: #333; min-height: 45px; display: flex; align-items: center; justify-content: center; }
+        .product-btn:active { background: #e0f2f1; }
+
         .single-column { display: block; padding: 10px; }
         .card { background: #fff; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
         .card h3 { font-size: 16px; text-align: center; padding: 10px; margin: 0; background: #e0f2f1; color: #00796b; }
@@ -27,7 +33,7 @@
 </head>
 <body>
 
-<header id="header">ИНСЕКТИЦИДЛАР</header>
+<header id="header">Chemical Solutions</header>
 <div id="app"></div>
 
 <script>
@@ -37,6 +43,7 @@ tg.expand();
 
 const BASE_PATH = "images";
 
+// 1. ИНСЕКТИЦИДЫ
 const insecticides = [
     { id: "akara_max", name: "AKARA MAX®" },
     { id: "komfidor_profi", name: "KOMFIDOR PROFI®" },
@@ -56,22 +63,57 @@ const insecticides = [
     { id: "yvertim", name: "YVERTIM®" }
 ];
 
+// 2. ГЕРБИЦИДЫ
+const herbicides = [
+    { id: "herb_1", name: "Гербицид 1" }
+];
+
+// 3. ФУНГИЦИДЫ
+const fungicides = [
+    { id: "fung_1", name: "Фунгицид 1" }
+];
+
+// 4. ЎҒИТЛАР
+const fertilizers = [
+    { id: "fert_1", name: "Ўғит 1" }
+];
+
+// 5. ДЕФОЛИАНТЛАР
+const defoliants = [
+    { id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }
+];
+
 const app = document.getElementById("app");
 const header = document.getElementById("header");
 
-function showMain() {
-    header.innerText = "ИНСЕКТИЦИДЛАР";
+function showHome() {
+    header.innerText = "Chemical Solutions";
+    window.scrollTo(0, 0);
+    app.innerHTML = `
+        <div class="menu-grid">
+            <div class="category-btn" onclick="showCategory('Инсектицидлар', insecticides)">ИНСЕКТИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('Гербицидлар', herbicides)">ГЕРБИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('Фунгицидлар', fungicides)">ФУНГИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('ЎҒИТЛАР', fertilizers)">ЎҒИТЛАР</div>
+            <div class="category-btn" style="grid-column: span 2;" onclick="showCategory('ДЕФОЛИАНТЛАР', defoliants)">ДЕФОЛИАНТЛАР</div>
+        </div>
+    `;
+}
+
+function showCategory(title, list) {
+    header.innerText = title;
     window.scrollTo(0, 0);
     let html = '<div class="menu-grid">';
-    insecticides.forEach(p => {
-        html += `<div class="product-btn" onclick="showProduct('${p.id}')">${p.name}</div>`;
+    list.forEach(p => {
+        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', ${JSON.stringify(list).replace(/"/g, '&quot;')})">${p.name}</div>`;
     });
     html += '</div>';
+    html += `<div class="back-btn" onclick="showHome()">⬅ АСОСИЙ МЕНЮ</div>`;
     app.innerHTML = html;
 }
 
-function showProduct(id) {
-    const p = insecticides.find(x => x.id === id);
+function showProduct(id, categoryTitle, list) {
+    const p = list.find(x => x.id === id);
     header.innerText = p.name;
     window.scrollTo(0, 0);
 
@@ -81,22 +123,19 @@ function showProduct(id) {
                 <h3>Препарат</h3>
                 <img src="${BASE_PATH}/${p.id}/product.png" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
-
             <div class="info-text">
-                Замонавий юқори самарали инсектицид. Экинларни зараркунандалардан ишончли ҳимоя қилади.
+                Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.
             </div>
-
             <div class="card">
-                <h3>Зараркунанда</h3>
+                <h3>Қўшимча маълумот</h3>
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
         </div>
-        
-        <div class="back-btn" onclick="showMain()">⬅ ОРҚАГА</div>
+        <div class="back-btn" onclick="showCategory('${categoryTitle}', ${JSON.stringify(list).replace(/"/g, '&quot;')})">⬅ ОРҚАГА</div>
     `;
 }
 
-showMain();
+showHome();
 </script>
 </body>
 </html>
