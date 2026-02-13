@@ -82,7 +82,7 @@ const insecticides = [
   },
   {
     id: "uproklеym_fit_500",
-    name: "UPROKLEYM FIT-500® 50% с.э.г.",
+    name: "uprokleym_fit_500® 50% с.э.г.",
     text: `Замонавий, юқори самарали инсектицид.
 Таъсир этувчи моддаси: Emamectin benzoate 500 g/kg.
 Препаратив шакли: Сувда эрийдиган гранула`
