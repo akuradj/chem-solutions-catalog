@@ -7,17 +7,15 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { margin: 0; font-family: sans-serif; background: #f4f6f8; color: #333; }
-        header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; text-transform: uppercase; letter-spacing: 1px; }
+        header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; text-transform: uppercase; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        .category-btn { background: #00796b; color: white; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: none; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
-        .category-btn:active { background: #004d40; transform: scale(0.95); }
-        .product-btn { background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #ddd; color: #333; min-height: 45px; display: flex; align-items: center; justify-content: center; }
-        .product-btn:active { background: #e0f2f1; }
+        .category-btn { background: #00796b; color: white; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: none; text-transform: uppercase; }
+        .product-btn { background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #ddd; min-height: 45px; display: flex; align-items: center; justify-content: center; }
         .single-column { display: block; padding: 10px; }
         .card { background: #fff; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
         .card h3 { font-size: 16px; text-align: center; padding: 10px; margin: 0; background: #e0f2f1; color: #00796b; }
-        img { width: 100%; height: auto; display: block; }
-        .info-text { background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.5; border-left: 5px solid #00796b; font-size: 15px; white-space: pre-wrap; }
+        img { width: 100%; height: auto; display: block; background: #eee; }
+        .info-text { background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #00796b; font-size: 15px; }
         .back-btn { background: #455a64; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 20px 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
@@ -31,9 +29,9 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const BASE_PATH = "images";
+// ПУТЬ К КАРТИНКАМ - ПРОВЕРЬ ЭТОТ ПУТЬ!
+const BASE_PATH = "images"; 
 
-// Глобальный объект со всеми данными
 const DATA = {
     insecticides: [
         { id: "akara_max", name: "AKARA MAX®" },
@@ -64,9 +62,9 @@ const DATA = {
         { id: "ustrobi", name: "USTROBI®", text: "Стробилурин гуруҳига мансуб фунгицид. Юқори самарадорликка эга." },
         { id: "xom_chem", name: "XOM CHEM®", text: "Мис асосидаги контакт фунгицид. Кўплаб замбуруғ касалликларига қарши." }
     ],
-    herbicides: [{ id: "herb_1", name: "Гербицид 1" }],
-    fertilizers: [{ id: "fert_1", name: "Ўғит 1" }],
-    defoliants: [{ id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }]
+    herbicides: [],
+    fertilizers: [],
+    defoliants: []
 };
 
 const app = document.getElementById("app");
@@ -74,52 +72,49 @@ const header = document.getElementById("header");
 
 function showHome() {
     header.innerText = "Chemical Solutions";
-    window.scrollTo(0, 0);
     app.innerHTML = `
         <div class="menu-grid">
-            <div class="category-btn" onclick="showCategory('Инсектицидлар', 'insecticides')">ИНСЕКТИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('Гербицидлар', 'herbicides')">ГЕРБИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('Фунгицидлар', 'fungicides')">ФУНГИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('ЎҒИТЛАР', 'fertilizers')">ЎҒИТЛАР</div>
-            <div class="category-btn" style="grid-column: span 2;" onclick="showCategory('ДЕФОЛИАНТЛАР', 'defoliants')">ДЕФОЛИАНТЛАР</div>
+            <div class="category-btn" onclick="renderList('Инсектицидлар', 'insecticides')">ИНСЕКТИЦИДЛАР</div>
+            <div class="category-btn" onclick="renderList('Гербицидлар', 'herbicides')">ГЕРБИЦИДЛАР</div>
+            <div class="category-btn" onclick="renderList('Фунгицидлар', 'fungicides')">ФУНГИЦИДЛАР</div>
+            <div class="category-btn" onclick="renderList('Ўғитлар', 'fertilizers')">ЎҒИТЛАР</div>
+            <div class="category-btn" style="grid-column: span 2" onclick="renderList('Дефолиантлар', 'defoliants')">ДЕФОЛИАНТЛАР</div>
         </div>
     `;
 }
 
-function showCategory(title, key) {
+function renderList(title, key) {
     header.innerText = title;
-    window.scrollTo(0, 0);
-    const list = DATA[key];
     let html = '<div class="menu-grid">';
-    list.forEach(p => {
-        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${key}')">${p.name}</div>`;
+    DATA[key].forEach(p => {
+        html += `<div class="product-btn" onclick="renderProduct('${p.id}', '${title}', '${key}')">${p.name}</div>`;
     });
-    html += '</div>';
-    html += `<div class="back-btn" onclick="showHome()">⬅ АСОСИЙ МЕНЮ</div>`;
+    html += '</div><div class="back-btn" onclick="showHome()">⬅ ОРҚАГА</div>';
     app.innerHTML = html;
+    window.scrollTo(0,0);
 }
 
-function showProduct(productId, categoryTitle, categoryKey) {
-    const p = DATA[categoryKey].find(x => x.id === productId);
+function renderProduct(id, catTitle, key) {
+    const p = DATA[key].find(x => x.id === id);
     header.innerText = p.name;
-    window.scrollTo(0, 0);
-
-    const infoText = p.text ? p.text : "Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.";
-
+    const info = p.text || "Замонавий юқори самарали восита.";
+    
+    // ВНИМАНИЕ: Если картинки лежат в папке images/fungicides/..., то замени BASE_PATH ниже на "images/fungicides"
     app.innerHTML = `
         <div class="single-column">
             <div class="card">
                 <h3>Препарат</h3>
-                <img src="${BASE_PATH}/${p.id}/product.png" onerror="this.src='${BASE_PATH}/no-image.png'">
+                <img src="${BASE_PATH}/${p.id}/product.png" onerror="this.src='https://placehold.co/400x400?text=No+Image'">
             </div>
-            <div class="info-text">${infoText}</div>
+            <div class="info-text">${info}</div>
             <div class="card">
-                <h3>Қўшимча маълумот</h3>
-                <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
+                <h3>Зараркунанда / Маълумот</h3>
+                <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='https://placehold.co/400x400?text=No+Image'">
             </div>
         </div>
-        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${categoryKey}')">⬅ ОРҚАГА</div>
+        <div class="back-btn" onclick="renderList('${catTitle}', '${key}')">⬅ ОРҚАГА</div>
     `;
+    window.scrollTo(0,0);
 }
 
 showHome();
