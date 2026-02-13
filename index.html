@@ -6,16 +6,26 @@
     <title>Chemical Solutions Catalog</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #333; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f0f2f5; color: #333; }
         header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .card { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; }
-        .product-btn { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .product-btn:active { transform: scale(0.98); background: #f5f5f5; }
-        img { width: 100%; border-radius: 8px; margin-bottom: 8px; object-fit: contain; }
-        .info-text { padding: 15px; background: #fff; margin: 10px; border-radius: 12px; line-height: 1.5; font-size: 14px; white-space: pre-wrap; }
-        .back-btn { background: #546e7a; color: #fff; padding: 15px; text-align: center; border-radius: 12px; margin: 15px; cursor: pointer; font-weight: bold; }
-        h3 { font-size: 14px; margin: 5px 0; color: #00796b; }
+        
+        /* Сетка для главного меню */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        
+        .product-btn { background: #fff; border-radius: 10px; padding: 15px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; min-height: 50px; border: 1px solid #e0e0e0; }
+        .product-btn:active { background: #e0f2f1; transform: scale(0.97); }
+
+        /* Карточка товара (одна под другой) */
+        .product-container { padding: 10px; display: flex; flex-direction: column; gap: 15px; }
+        .card { background: #fff; border-radius: 15px; padding: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+        .card h3 { font-size: 16px; text-align: center; margin: 10px 0; color: #00796b; }
+        
+        img { width: 100%; height: auto; display: block; }
+        
+        .info-text { background: #e0f2f1; padding: 15px; border-radius: 12px; line-height: 1.6; font-size: 15px; color: #004d40; border-left: 5px solid #00796b; }
+        
+        .back-btn { background: #455a64; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 20px 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .back-btn:active { background: #263238; }
     </style>
 </head>
 <body>
@@ -54,34 +64,43 @@ const header = document.getElementById("header");
 
 function showMain() {
     header.innerText = "ИНСЕКТИЦИДЛАР";
-    let html = '<div class="grid">';
+    window.scrollTo(0, 0);
+    let html = '<div class="grid-menu">';
     insecticides.forEach(p => {
         html += `<div class="product-btn" onclick="showProduct('${p.id}')">${p.name}</div>`;
     });
-    html += '</div>';
+    html += '</div><div style="height:50px"></div>';
     app.innerHTML = html;
 }
 
 function showProduct(id) {
     const p = insecticides.find(x => x.id === id);
     header.innerText = p.name;
+    window.scrollTo(0, 0);
 
     app.innerHTML = `
-        <div class="grid">
+        <div class="product-container">
             <div class="card">
                 <h3>Препарат</h3>
                 <img src="${BASE_PATH}/${p.id}/product.png" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
+
+            <div class="info-text">
+                Замонавий юқори самарали инсектицид. Экинларни зараркунандалардан ишончли ҳимоя қилади.
+            </div>
+
             <div class="card">
                 <h3>Зараркунанда</h3>
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
         </div>
-        <div class="info-text">Замонавий юқори самарали инсектицид. Экинларни зараркунандалардан ишончли ҳимоя қилади.</div>
+        
         <div class="back-btn" onclick="showMain()">⬅ ОРҚАГА</div>
+        <div style="height: 40px;"></div>
     `;
 }
 
+// Запуск приложения
 showMain();
 </script>
 </body>
