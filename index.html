@@ -33,47 +33,41 @@ tg.expand();
 
 const BASE_PATH = "images";
 
-// 1. ИНСЕКТИЦИДЛАР
-const insecticides = [
-    { id: "akara_max", name: "AKARA MAX®" },
-    { id: "komfidor_profi", name: "KOMFIDOR PROFI®" },
-    { id: "mospi_chem", name: "MOSPI CHEM®" },
-    { id: "mospi_max", name: "MOSPI MAX®" },
-    { id: "pirido_chem", name: "PIRIDO CHEM®" },
-    { id: "tepek_chem", name: "TEPEK CHEM®" },
-    { id: "ucefat", name: "UCEFAT®" },
-    { id: "udonis", name: "UDONIS®" },
-    { id: "ukarat_forte0", name: "UKARAT FORTE®" },
-    { id: "ukleym", name: "UKLEYM®" },
-    { id: "upolit", name: "UPOLIT®" },
-    { id: "uprokleym_fit_500", name: "UPROKLEYM FIT®" },
-    { id: "uspilan", name: "USPILAN®" },
-    { id: "utastar", name: "UTASTAR®" },
-    { id: "uvertim_plus", name: "UVERTIM PLUS®" },
-    { id: "yvertim", name: "YVERTIM®" }
-];
-
-// 2. ГЕРБИЦИДЛАР
-const herbicides = [{ id: "herb_1", name: "Гербицид 1" }];
-
-// 3. ФУНГИЦИДЛАР (ВСЕ 9 ПОЗИЦИЙ ДОБАВЛЕНЫ)
-const fungicides = [
-  { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид. Ўсимликларни замбуруғ касалликларидан ҳимоя қилади." },
-  { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид. Кўплаб қўзиқорин касалликларига қарши самарали." },
-  { id: "swichem", name: "SWICHEM®", text: "Янги авлод фунгициди. Профилактика ва даволаш учун қўлланилади." },
-  { id: "udomil", name: "UDOMIL®", text: "Тез таъсир қилувчи фунгицид. Барг ва илдиз орқали сўрилади." },
-  { id: "ukvadrio", name: "UKVADRIO®", text: "Кенг спектрли системали фунгицид. Қўзиқорин касалликларига қарши ишончли ҳимоя." },
-  { id: "upaz", name: "UPAZ®", text: "Контакт фунгицид. Профилактика мақсадида қўлланилади." },
-  { id: "uskor", name: "USKOR®", text: "Системали фунгицид. Узоқ муддатли ҳимоя таъминлайди." },
-  { id: "ustrobi", name: "USTROBI®", text: "Стробилурин гуруҳига мансуб фунгицид. Юқори самарадорликка эга." },
-  { id: "xom_chem", name: "XOM CHEM®", text: "Мис асосидаги контакт фунгицид. Кўплаб замбуруғ касалликларига қарши." }
-];
-
-// 4. ЎҒИТЛАР
-const fertilizers = [{ id: "fert_1", name: "Ўғит 1" }];
-
-// 5. ДЕФОЛИАНТЛАР
-const defoliants = [{ id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }];
+// Глобальный объект со всеми данными
+const DATA = {
+    insecticides: [
+        { id: "akara_max", name: "AKARA MAX®" },
+        { id: "komfidor_profi", name: "KOMFIDOR PROFI®" },
+        { id: "mospi_chem", name: "MOSPI CHEM®" },
+        { id: "mospi_max", name: "MOSPI MAX®" },
+        { id: "pirido_chem", name: "PIRIDO CHEM®" },
+        { id: "tepek_chem", name: "TEPEK CHEM®" },
+        { id: "ucefat", name: "UCEFAT®" },
+        { id: "udonis", name: "UDONIS®" },
+        { id: "ukarat_forte0", name: "UKARAT FORTE®" },
+        { id: "ukleym", name: "UKLEYM®" },
+        { id: "upolit", name: "UPOLIT®" },
+        { id: "uprokleym_fit_500", name: "UPROKLEYM FIT®" },
+        { id: "uspilan", name: "USPILAN®" },
+        { id: "utastar", name: "UTASTAR®" },
+        { id: "uvertim_plus", name: "UVERTIM PLUS®" },
+        { id: "yvertim", name: "YVERTIM®" }
+    ],
+    fungicides: [
+        { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид. Ўсимликларни замбуруғ касалликларидан ҳимоя қилади." },
+        { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид. Кўплаб қўзиқорин касалликларига қарши самарали." },
+        { id: "swichem", name: "SWICHEM®", text: "Янги авлод фунгициди. Профилактика ва даволаш учун қўлланилади." },
+        { id: "udomil", name: "UDOMIL®", text: "Тез таъсир қилувчи фунгицид. Барг ва илдиз орқали сўрилади." },
+        { id: "ukvadrio", name: "UKVADRIO®", text: "Кенг спектрли системали фунгицид. Қўзиқорин касалликларига қарши ишончли ҳимоя." },
+        { id: "upaz", name: "UPAZ®", text: "Контакт фунгицид. Профилактика мақсадида қўлланилади." },
+        { id: "uskor", name: "USKOR®", text: "Системали фунгицид. Узоқ муддатли ҳимоя таъминлайди." },
+        { id: "ustrobi", name: "USTROBI®", text: "Стробилурин гуруҳига мансуб фунгицид. Юқори самарадорликка эга." },
+        { id: "xom_chem", name: "XOM CHEM®", text: "Мис асосидаги контакт фунгицид. Кўплаб замбуруғ касалликларига қарши." }
+    ],
+    herbicides: [{ id: "herb_1", name: "Гербицид 1" }],
+    fertilizers: [{ id: "fert_1", name: "Ўғит 1" }],
+    defoliants: [{ id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }]
+};
 
 const app = document.getElementById("app");
 const header = document.getElementById("header");
@@ -92,26 +86,25 @@ function showHome() {
     `;
 }
 
-function showCategory(title, listKey) {
-    const list = eval(listKey);
+function showCategory(title, key) {
     header.innerText = title;
     window.scrollTo(0, 0);
+    const list = DATA[key];
     let html = '<div class="menu-grid">';
     list.forEach(p => {
-        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${listKey}')">${p.name}</div>`;
+        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${key}')">${p.name}</div>`;
     });
     html += '</div>';
     html += `<div class="back-btn" onclick="showHome()">⬅ АСОСИЙ МЕНЮ</div>`;
     app.innerHTML = html;
 }
 
-function showProduct(id, categoryTitle, listKey) {
-    const list = eval(listKey);
-    const p = list.find(x => x.id === id);
+function showProduct(productId, categoryTitle, categoryKey) {
+    const p = DATA[categoryKey].find(x => x.id === productId);
     header.innerText = p.name;
     window.scrollTo(0, 0);
 
-    const infoText = p.text ? p.text : "Замонавий юқори самарали восита.";
+    const infoText = p.text ? p.text : "Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.";
 
     app.innerHTML = `
         <div class="single-column">
@@ -125,7 +118,7 @@ function showProduct(id, categoryTitle, listKey) {
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
         </div>
-        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${listKey}')">⬅ ОРҚАГА</div>
+        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${categoryKey}')">⬅ ОРҚАГА</div>
     `;
 }
 
