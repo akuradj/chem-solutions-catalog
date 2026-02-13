@@ -4,126 +4,97 @@
   <meta charset="UTF-8">
   <title>Chemical Solutions Catalog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#f4f6f8;
     }
-
-    header {
-      background: #7a0e2d;
-      color: white;
-      padding: 14px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
+    header{
+      background:#c2185b;
+      color:#fff;
+      padding:14px;
+      text-align:center;
+      font-weight:bold;
     }
-
-    #app {
-      padding: 12px;
+    .card{
+      background:#fff;
+      margin:12px;
+      padding:12px;
+      border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
     }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    img{
+      width:100%;
+      border-radius:10px;
     }
-
-    .product {
-      padding: 14px;
-      margin-bottom: 10px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    img {
-      width: 100%;
-      max-width: 320px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .button {
-      margin-top: 16px;
-      padding: 12px;
-      background: #7a0e2d;
-      color: white;
-      text-align: center;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      font-size: 14px;
-      line-height: 1.4;
+    .button{
+      background:#c2185b;
+      color:#fff;
+      padding:14px;
+      text-align:center;
+      border-radius:10px;
+      margin:12px;
+      cursor:pointer;
+      font-weight:bold;
     }
   </style>
 </head>
 <body>
 
-<header id="header">Инсекцидлар</header>
+<header id="header">Инсектицидлар</header>
 <div id="app"></div>
 
 <script>
-const header = document.getElementById("header");
-const app = document.getElementById("app");
+const BASE =
+  "https://akuradj.github.io/chem-solutions-catalog/images";
 
-/* 🔹 ДАННЫЕ (пока 1 препарат для теста) */
 const insecticides = [
   {
     id: "akara_max",
-    name: "AKARA MAX® 66% эм.к.",
-    text: "Зарарли каналарга қарши юқори самарали ихтисослашган акарицид.\n\nТаъсир этувчи моддаси:\nPropargit 600 g/L + Geksitiazoks 60 g/L\n\nПрепаратив шакли:\nЭмульсия концентрати"
+    name: "AKARA MAX® 66% э.м.к.",
+    text:
+`Зарарли каналарга қарши юқори самарали ихтисослашган акарицид
+Таъсир этувчи моддаси:
+Propargit 600 g/L + Geksitiazoks 60 g/L
+Препаратив шакли: Эмульсия концентрати`
   }
 ];
 
-/* 🔹 ГЛАВНЫЙ СПИСОК */
-function showInsecticides(){
-  header.innerText = "Инсекцидлар";
-  app.innerHTML = "";
+const app = document.getElementById("app");
+const header = document.getElementById("header");
 
-  insecticides.forEach(p => {
-    app.innerHTML += `
-      <div class="product" onclick="showProduct('${p.id}')">
-        ${p.name}
-      </div>
-    `;
-  });
+function showMain(){
+  header.innerText = "Инсектицидлар";
+  app.innerHTML = `
+    <div class="button" onclick="showProduct('akara_max')">
+      AKARA MAX®
+    </div>
+  `;
 }
 
-/* 🔹 СТРАНИЦА ПРОДУКТА */
 function showProduct(id){
-  const p = insecticides.find(x => x.id === id);
+  const p = insecticides.find(x=>x.id===id);
   header.innerText = p.name;
 
   app.innerHTML = `
     <div class="card">
-      <img src="https://akuradj.github.io/chem-solutions-catalog/images/${p.id}/product.png">
+      <img src="${BASE}/${p.id}/product.png">
     </div>
 
     <div class="card">
-      <img src="https://akuradj.github.io/chem-solutions-catalog/images/${p.id}/pest.jpg">
+      <img src="${BASE}/${p.id}/pest.jpg">
     </div>
 
     <div class="card">
-      <pre>${p.text}</pre>
+      <pre style="white-space:pre-wrap">${p.text}</pre>
     </div>
 
-    <div class="button" onclick="showInsecticides()">⬅ Орқага</div>
+    <div class="button" onclick="showMain()">⬅ Орқага</div>
   `;
 }
 
-/* 🔹 ЗАПУСК */
-showInsecticides();
+showMain();
 </script>
 
 </body>
