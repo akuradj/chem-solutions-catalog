@@ -1,42 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>Mini App Test</title>
+  <title>Chemical Solutions Catalog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #0a7cff;
-      color: white;
-      text-align: center;
-    }
-    h1 {
-      margin-top: 40px;
-      font-size: 24px;
-    }
-    p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>✅ MINI APP ЖИВОЙ</h1>
-  <p>Если ты видишь этот экран — всё работает</p>
-  <p>Дальше добавим каталог</p>
+  <header id="header">📦 Chemical Solutions каталоги</header>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-  </script>
+  <main id="app"></main>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
