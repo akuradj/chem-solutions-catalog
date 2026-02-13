@@ -56,7 +56,7 @@ const insecticides = [
 // 2. ГЕРБИЦИДЛАР
 const herbicides = [{ id: "herb_1", name: "Гербицид 1" }];
 
-// 3. ФУНГИЦИДЛАР (ТВОЙ НОВЫЙ СПИСОК)
+// 3. ФУНГИЦИДЛАР (ВСЕ 9 ПОЗИЦИЙ ДОБАВЛЕНЫ)
 const fungicides = [
   { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид. Ўсимликларни замбуруғ касалликларидан ҳимоя қилади." },
   { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид. Кўплаб қўзиқорин касалликларига қарши самарали." },
@@ -83,31 +83,30 @@ function showHome() {
     window.scrollTo(0, 0);
     app.innerHTML = `
         <div class="menu-grid">
-            <div class="category-btn" onclick="showCategory('Инсектицидлар', insecticides)">ИНСЕКТИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('Гербицидлар', herbicides)">ГЕРБИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('Фунгицидлар', fungicides)">ФУНГИЦИДЛАР</div>
-            <div class="category-btn" onclick="showCategory('ЎҒИТЛАР', fertilizers)">ЎҒИТЛАР</div>
-            <div class="category-btn" style="grid-column: span 2;" onclick="showCategory('ДЕФОЛИАНТЛАР', defoliants)">ДЕФОЛИАНТЛАР</div>
+            <div class="category-btn" onclick="showCategory('Инсектицидлар', 'insecticides')">ИНСЕКТИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('Гербицидлар', 'herbicides')">ГЕРБИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('Фунгицидлар', 'fungicides')">ФУНГИЦИДЛАР</div>
+            <div class="category-btn" onclick="showCategory('ЎҒИТЛАР', 'fertilizers')">ЎҒИТЛАР</div>
+            <div class="category-btn" style="grid-column: span 2;" onclick="showCategory('ДЕФОЛИАНТЛАР', 'defoliants')">ДЕФОЛИАНТЛАР</div>
         </div>
     `;
 }
 
-function showCategory(title, list) {
+function showCategory(title, listKey) {
+    const list = eval(listKey);
     header.innerText = title;
     window.scrollTo(0, 0);
     let html = '<div class="menu-grid">';
     list.forEach(p => {
-        // Передаем весь объект через JSON, экранируя кавычки
-        const listStr = JSON.stringify(list).replace(/'/g, "\\'");
-        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${listStr}')">${p.name}</div>`;
+        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${listKey}')">${p.name}</div>`;
     });
     html += '</div>';
     html += `<div class="back-btn" onclick="showHome()">⬅ АСОСИЙ МЕНЮ</div>`;
     app.innerHTML = html;
 }
 
-function showProduct(id, categoryTitle, listJson) {
-    const list = JSON.parse(listJson.replace(/\\'/g, "'"));
+function showProduct(id, categoryTitle, listKey) {
+    const list = eval(listKey);
     const p = list.find(x => x.id === id);
     header.innerText = p.name;
     window.scrollTo(0, 0);
@@ -126,7 +125,7 @@ function showProduct(id, categoryTitle, listJson) {
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
         </div>
-        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${JSON.stringify(list).replace(/'/g, "\\'")}')">⬅ ОРҚАГА</div>
+        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${listKey}')">⬅ ОРҚАГА</div>
     `;
 }
 
