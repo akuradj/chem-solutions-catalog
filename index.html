@@ -54,11 +54,9 @@ const insecticides = [
 ];
 
 // 2. ГЕРБИЦИДЛАР
-const herbicides = [
-    { id: "herb_1", name: "Гербицид 1" }
-];
+const herbicides = [{ id: "herb_1", name: "Гербицид 1" }];
 
-// 3. ФУНГИЦИДЛАР (Твои новые данные)
+// 3. ФУНГИЦИДЛАР (ТВОЙ НОВЫЙ СПИСОК)
 const fungicides = [
   { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид. Ўсимликларни замбуруғ касалликларидан ҳимоя қилади." },
   { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид. Кўплаб қўзиқорин касалликларига қарши самарали." },
@@ -72,14 +70,10 @@ const fungicides = [
 ];
 
 // 4. ЎҒИТЛАР
-const fertilizers = [
-    { id: "fert_1", name: "Ўғит 1" }
-];
+const fertilizers = [{ id: "fert_1", name: "Ўғит 1" }];
 
 // 5. ДЕФОЛИАНТЛАР
-const defoliants = [
-    { id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }
-];
+const defoliants = [{ id: "defoliant_1", name: "ДЕФОЛИАНТ 1" }];
 
 const app = document.getElementById("app");
 const header = document.getElementById("header");
@@ -103,19 +97,22 @@ function showCategory(title, list) {
     window.scrollTo(0, 0);
     let html = '<div class="menu-grid">';
     list.forEach(p => {
-        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', ${JSON.stringify(list).replace(/"/g, '&quot;')})">${p.name}</div>`;
+        // Передаем весь объект через JSON, экранируя кавычки
+        const listStr = JSON.stringify(list).replace(/'/g, "\\'");
+        html += `<div class="product-btn" onclick="showProduct('${p.id}', '${title}', '${listStr}')">${p.name}</div>`;
     });
     html += '</div>';
     html += `<div class="back-btn" onclick="showHome()">⬅ АСОСИЙ МЕНЮ</div>`;
     app.innerHTML = html;
 }
 
-function showProduct(id, categoryTitle, list) {
+function showProduct(id, categoryTitle, listJson) {
+    const list = JSON.parse(listJson.replace(/\\'/g, "'"));
     const p = list.find(x => x.id === id);
     header.innerText = p.name;
     window.scrollTo(0, 0);
 
-    const infoText = p.text ? p.text : "Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.";
+    const infoText = p.text ? p.text : "Замонавий юқори самарали восита.";
 
     app.innerHTML = `
         <div class="single-column">
@@ -129,7 +126,7 @@ function showProduct(id, categoryTitle, list) {
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
         </div>
-        <div class="back-btn" onclick="showCategory('${categoryTitle}', ${JSON.stringify(list).replace(/"/g, '&quot;')})">⬅ ОРҚАГА</div>
+        <div class="back-btn" onclick="showCategory('${categoryTitle}', '${JSON.stringify(list).replace(/'/g, "\\'")}')">⬅ ОРҚАГА</div>
     `;
 }
 
