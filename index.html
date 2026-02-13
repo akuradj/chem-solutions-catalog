@@ -8,26 +8,16 @@
     <style>
         body { margin: 0; font-family: sans-serif; background: #f4f6f8; color: #333; }
         header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 100; text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* Сетка категорий */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        
-        /* Кнопки разделов */
         .category-btn { background: #00796b; color: white; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: none; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
         .category-btn:active { background: #004d40; transform: scale(0.95); }
-
-        /* Кнопки товаров */
         .product-btn { background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #ddd; color: #333; min-height: 45px; display: flex; align-items: center; justify-content: center; }
         .product-btn:active { background: #e0f2f1; }
-
         .single-column { display: block; padding: 10px; }
         .card { background: #fff; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
         .card h3 { font-size: 16px; text-align: center; padding: 10px; margin: 0; background: #e0f2f1; color: #00796b; }
-        
         img { width: 100%; height: auto; display: block; }
-        
-        .info-text { background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.5; border-left: 5px solid #00796b; font-size: 15px; }
-        
+        .info-text { background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.5; border-left: 5px solid #00796b; font-size: 15px; white-space: pre-wrap; }
         .back-btn { background: #455a64; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 20px 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
@@ -43,7 +33,7 @@ tg.expand();
 
 const BASE_PATH = "images";
 
-// 1. ИНСЕКТИЦИДЫ
+// 1. ИНСЕКТИЦИДЛАР
 const insecticides = [
     { id: "akara_max", name: "AKARA MAX®" },
     { id: "komfidor_profi", name: "KOMFIDOR PROFI®" },
@@ -63,14 +53,22 @@ const insecticides = [
     { id: "yvertim", name: "YVERTIM®" }
 ];
 
-// 2. ГЕРБИЦИДЫ
+// 2. ГЕРБИЦИДЛАР
 const herbicides = [
     { id: "herb_1", name: "Гербицид 1" }
 ];
 
-// 3. ФУНГИЦИДЫ
+// 3. ФУНГИЦИДЛАР (Твои новые данные)
 const fungicides = [
-    { id: "fung_1", name: "Фунгицид 1" }
+  { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид. Ўсимликларни замбуруғ касалликларидан ҳимоя қилади." },
+  { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид. Кўплаб қўзиқорин касалликларига қарши самарали." },
+  { id: "swichem", name: "SWICHEM®", text: "Янги авлод фунгициди. Профилактика ва даволаш учун қўлланилади." },
+  { id: "udomil", name: "UDOMIL®", text: "Тез таъсир қилувчи фунгицид. Барг ва илдиз орқали сўрилади." },
+  { id: "ukvadrio", name: "UKVADRIO®", text: "Кенг спектрли системали фунгицид. Қўзиқорин касалликларига қарши ишончли ҳимоя." },
+  { id: "upaz", name: "UPAZ®", text: "Контакт фунгицид. Профилактика мақсадида қўлланилади." },
+  { id: "uskor", name: "USKOR®", text: "Системали фунгицид. Узоқ муддатли ҳимоя таъминлайди." },
+  { id: "ustrobi", name: "USTROBI®", text: "Стробилурин гуруҳига мансуб фунгицид. Юқори самарадорликка эга." },
+  { id: "xom_chem", name: "XOM CHEM®", text: "Мис асосидаги контакт фунгицид. Кўплаб замбуруғ касалликларига қарши." }
 ];
 
 // 4. ЎҒИТЛАР
@@ -117,15 +115,15 @@ function showProduct(id, categoryTitle, list) {
     header.innerText = p.name;
     window.scrollTo(0, 0);
 
+    const infoText = p.text ? p.text : "Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.";
+
     app.innerHTML = `
         <div class="single-column">
             <div class="card">
                 <h3>Препарат</h3>
                 <img src="${BASE_PATH}/${p.id}/product.png" onerror="this.src='${BASE_PATH}/no-image.png'">
             </div>
-            <div class="info-text">
-                Замонавий юқори самарали восита. Экинларни ҳимоя қилиш ва ҳосилдорликни ошириш учун мўлжалланган.
-            </div>
+            <div class="info-text">${infoText}</div>
             <div class="card">
                 <h3>Қўшимча маълумот</h3>
                 <img src="${BASE_PATH}/${p.id}/pest.jpg" onerror="this.src='${BASE_PATH}/no-image.png'">
