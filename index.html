@@ -31,193 +31,139 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 const DATA = {
-
-insecticides: {
-title:"ИНСЕКТИЦИДЛАР",
-path:"insecticides",
-items:[
-{ id:"akara_max", name:"AKARA MAX®", text:`AKARA MAX® 66% эм.к.
-Зарарли каналарга қарши юқори
-самарали ихтисослашган акарицид
-
-· Таъсир этувчи моддаси: Propargit 600 g/L
-+ Geksitiazoks 60 g/l
-· Препаратив шакли: Эмульсия концентрати`},
-
-{ id:"komfidor_profi", name:"KOMFIDOR PROFI®", text:`KOMFIDOR PROFI® 20% с.э.к.
-Зарарли ҳашаротларга қарши юқори
-самарали системали инсектицид
-
-· Таъсир этувчи моддаси: Imidacloprid 200 g/l
-· Препаратив шакли: Сувда эрувчи концентрат`},
-
-{ id:"mospi_chem", name:"MOSPI CHEM®", text:`MOSPI CHEM® 20% н.кук.
-Зарарли ҳашаротларга қарши юқори
-самарали ихтисослашган инсектицид
-
-· Таъсир этувчи моддаси: Acetamiprid 200 g/kg
-· Препаратив шакли: Намланувчи кукун`},
-
-{ id:"mospi_max", name:"MOSPI MAX®", text:`MOSPI MAX® 35% с.д.г.
-Зарарли ҳашаротларга қарши юқори
-самарали ихтисослашган инсектицид
-
-· Таъсир этувчи моддаси: Acetamiprid 150 g/kg
-+ Flonicamid 200 g/kg
-· Препаратив шакли: Сувда дисперсияланувчи гранулалар`},
-
-{ id:"pirido_chem", name:"PIRIDO CHEM®", text:`PIRIDO CHEM® 20% н.кук.
-Зарарли каналарга тизимли таъсир қилувчи
-ихтисослашган акарицид
-
-· Таъсир этувчи моддаси: Piridaben 200 g/kg
-· Препаратив шакли: Намланувчи кукун`},
-
-{ id:"tepek_chem", name:"TEPEK CHEM®", text:`TEPEK CHEM® 50% с.д.г.
-Зараркунанда ҳашаротларга қарши
-юқори самарали ихтисослашган инсектицид
-
-· Таъсир этувчи моддаси: Flonicamid 500 g/kg
-· Препаратив шакли: Сувда дисперсияланувчи гранулалар`},
-
-{ id:"ucefat", name:"UCEFAT®", text:`UCEFAT® 75% э.кук.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектицид
-
-· Таъсир этувчи моддаси: Acephate 750 g/kg
-· Препаратив шакли: Эрувчи кукун`},
-
-{ id:"udonis", name:"UDONIS®", text:`UDONIS® 5% с.к.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектоакарицид
-
-· Таъсир этувчи моддаси: Fipronil 50 g/l
-· Препаратив шакли: Суспензия концентрати`},
-
-{ id:"ukarat_forte", name:"UKARAT FORTE®", text:`UKARAT FORTE® 5% эм.к.
-Зарарли ҳашаротлар ва каналарга қарши
-самараси исботланган инсектоакарицид
-
-· Таъсир этувчи моддаси: Lambda-cyhalothrin 50 g/l
-· Препаратив шакли: Эмульсия концентрати`},
-
-{ id:"ukleym", name:"UKLEYM®", text:`UKLEYM® 5% с.э.г.
-Инсектицид ва акарицидларнинг
-таъсирини кучайтирувчи ёрдамчи модда
-
-· Таъсир этувчи моддаси: Polymer compounds
-· Препаратив шакли: Сувда эрувчи гранулалар`},
-
-{ id:"upolit", name:"UPOLIT®", text:`UPOLIT® 75% эм.к.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектоакарицид
-
-· Таъсир этувчи моддаси: Profenofos 650 g/l
-+ Cypermethrin 100 g/l
-· Препаратив шакли: Эмульсия концентрати`},
-
-{ id:"uprokleym_fit", name:"UPROKLEYM FIT®", text:`UPROKLEYM FIT® 50% с.э.г.
-Инсектицид ва акарицидлар билан
-қўллаш учун клей модда
-
-· Таъсир этувчи моддаси: Polymer compounds
-· Препаратив шакли: Сувда эрувчи гранулалар`},
-
-{ id:"uspilan", name:"USPILAN®", text:`USPILAN® 20% н.кук.
-Зарарли ҳашаротларга қарши юқори
-самарали системали инсектицид
-
-· Таъсир этувчи моддаси: Acetamiprid 200 g/kg
-· Препаратив шакли: Намланувчи кукун`},
-
-{ id:"utastar", name:"UTASTAR®", text:`UTASTAR® 10% эм.к.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектоакарицид
-
-· Таъсир этувчи моддаси: Bifenthrin 100 g/l
-· Препаратив шакли: Эмульсия концентрати`},
-
-{ id:"uvertim_plus", name:"UVERTIM PLUS®", text:`UVERTIM PLUS® 18% эм.к.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектоакарицид
-
-· Таъсир этувчи моддаси: Abamektin 60 g/l
-+ Spirodiclofen 120 g/l
-· Препаратив шакли: Эмульсия концентрати`},
-
-{ id:"yvertim", name:"YVERTIM®", text:`YVERTIM® 1,8% эм.к.
-Зарарли ҳашаротларга қарши юқори
-самарали инсектоакарицид
-
-· Таъсир этувчи моддаси: Abamektin 18 g/l
-· Препаратив шакли: Эмульсия концентрати`}
-]
-},
-
-fungicides:{ title:"ФУНГИЦИДЛАР", path:"fungicides", items:[
-{ id:"fosetil_chem", name:"FOSETIL CHEM®" },
-{ id:"panchem", name:"PANCHEM®" },
-{ id:"swichem", name:"SWICHEM®" },
-{ id:"udomil", name:"UDOMIL®" },
-{ id:"ukvadrio", name:"UKVADRIO®" },
-{ id:"upaz", name:"UPAZ®" },
-{ id:"uskor", name:"USKOR®" },
-{ id:"ustrobi", name:"USTROBI®" },
-{ id:"xom_chem", name:"XOM CHEM®" }
-]},
-
-herbicides:{ title:"ГЕРБИЦИДЛАР", path:"herbicides", items:[
-"grans_max","indazil_chem","lancelo_chem","laudi_chem","pivochem","suli_chem","uzellek","ugezart","yastar","ugotril","uklin","utopsho_plus","tufon_super","bazagran_mspa","glyphosate_50","renbou","topik_premium"
-].map(id=>({id,name:id.replace(/_/g," ").toUpperCase()+"®"}))},
-
-regulators:{ title:"РЕГУЛЯТОРЛАР", path:"regulators", items:[
-"benefit_pz","boroplus","brexil_line","calbit_c","control_dmp","master","viva","yield_on","radifarm","sweet","megafol","plantafol","mc_extra","mc_set","mc_cream"
-].map(id=>({id,name:id.replace(/_/g," ").toUpperCase()+"®"}))},
-
-defoliants:{ title:"ДЕФОЛИАНТ", path:"defoliants", items:[
-{ id:"udropp", name:"UDROPP®", text:`UDROPP® 54% м.сус.к.
-Ғўза ҳосилини тез етилиши ва
-теримдан аввал баргларни тўкиш
-учун қўлланиладиган дефолиант
-
-· Таъсир этувчи моддаси: Thidiazuron 360 g/l
-+ Diuron 180 g/l
-· Препаратив шакли: Мойли суспензия концентрати`}
-]}
+    insecticides: {
+        title: "ИНСЕКТИЦИДЛАР",
+        path: "insecticides",
+        items: [
+            { id: "akara_max", name: "AKARA MAX®", text: `AKARA MAX® 66% эм.к.\nЗарарли каналарга қарши юқори самарали ихтисослашган акарицид\n\n· Таъсир этувчи моддаси: Propargit 600 g/L + Geksitiazoks 60 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "komfidor_profi", name: "KOMFIDOR PROFI®", text: `KOMFIDOR PROFI® 20% с.э.к.\nЗарарли ҳашаротларга қарши юқори самарали системали инсектицид\n\n· Таъсир этувчи моддаси: Imidacloprid 200 g/l\n· Препаратив шакли: Сувда эрувчи концентрат` },
+            { id: "mospi_chem", name: "MOSPI CHEM®", text: `MOSPI CHEM® 20% н.кук.\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектицид\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg\n· Препаратив шакли: Намланувчи кукун` },
+            { id: "mospi_max", name: "MOSPI MAX®", text: `MOSPI MAX® 35% с.д.г.\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектицид\n\n· Таъсир этувчи моддаси: Acetamiprid 150 g/kg + Flonicamid 200 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "pirido_chem", name: "PIRIDO CHEM®", text: `PIRIDO CHEM® 20% н.кук.\nЗарарли каналарга тизимли таъсир қилувчи ихтисослашган акарицид\n\n· Таъсир этувчи моддаси: Piridaben 200 g/kg\n· Препаратив шакли: Намланувчи кукун` },
+            { id: "tepek_chem", name: "TEPEK CHEM®", text: `TEPEK CHEM® 50% с.д.г.\nЗараркунанда ҳашаротларга қарши юқори самарали ихтисослашган инсектицид\n\n· Таъсир этувчи моддаси: Flonicamid 500 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "ucefat", name: "UCEFAT®", text: `UCEFAT® 75% э.кук.\nЗарарли ҳашаротларга қарши юқори самарали инсектицид\n\n· Таъсир этувчи моддаси: Acephate 750 g/kg\n· Препаратив шакли: Эрувчи кукун` },
+            { id: "udonis", name: "UDONIS®", text: `UDONIS® 5% с.к.\nЗарарли ҳашаротларга қарши юқори самарали инсектоакарицид\n\n· Таъсир этувчи моддаси: Fipronil 50 g/l\n· Препаратив шакли: Суспензия концентрати` },
+            { id: "ukarat_forte", name: "UKARAT FORTE®", text: `UKARAT FORTE® 5% эм.к.\nЗарарли ҳашаротлар ва каналарга қарши самараси исботланган инсектоакарицид\n\n· Таъсир этувчи моддаси: Lambda-cyhalothrin 50 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "ukleym", name: "UKLEYM®", text: `UKLEYM® 5% с.э.г.\nИнсектицид ва акарицидларнинг таъсирини кучайтирувчи ёрдамчи модда\n\n· Таъсир этувчи моддаси: Polymer compounds\n· Препаратив шакли: Сувда эрувчи гранулалар` },
+            { id: "upolit", name: "UPOLIT®", text: `UPOLIT® 75% эм.к.\nЗарарли ҳашаротларга қарши юқори самарали инсектоакарицид\n\n· Таъсир этувчи моддаси: Profenofos 650 g/l + Cypermethrin 100 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "uprokleym_fit", name: "UPROKLEYM FIT®", text: `UPROKLEYM FIT® 50% с.э.г.\nИнсектицид ва акарицидлар билан қўллаш учун клей модда\n\n· Таъсир этувчи моддаси: Polymer compounds\n· Препаратив шакли: Сувда эрувчи гранулалар` },
+            { id: "uspilan", name: "USPILAN®", text: `USPILAN® 20% н.кук.\nЗарарли ҳашаротларга қарши юқори самарали системали инсектицид\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg\n· Препаратив шакли: Намланувчи кукун` },
+            { id: "utastar", name: "UTASTAR®", text: `UTASTAR® 10% эм.к.\nЗарарли ҳашаротларга қарши юқори самарали инсектоакарицид\n\n· Таъсир этувчи моддаси: Bifenthrhrin 100 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "uvertim_plus", name: "UVERTIM PLUS®", text: `UVERTIM PLUS® 18% эм.к.\nЗарарли ҳашаротларга қарши юқори самарали инсектоакарицид\n\n· Таъсир этувчи моддаси: Abamektin 60 g/l + Spirodiclofen 120 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "yvertim", name: "YVERTIM®", text: `YVERTIM® 1,8% эм.к.\nЗарарли ҳашаротларга қарши юқори самарали инсектоакарицид\n\n· Таъсир этувчи моддаси: Abamektin 18 g/l\n· Препаратив шакли: Эмульсия концентрати` }
+        ]
+    },
+    fungicides: {
+        title: "ФУНГИЦИДЛАР",
+        path: "fungicides",
+        items: [
+            { id: "fosetil_chem", name: "FOSETIL CHEM®", text: `FOSETIL CHEM® 80% н.кук.\nБактериал куйиш касалликларига қарши юқори самарали восита\n\n· Таъсир этувчи моддаси: Fosetyl aluminium 800 g/kg\n· Препаратив шакли: Намланувчи кукун` },
+            { id: "panchem", name: "PANCHEM®", text: `PANCHEM® 40% эм.к.\nКалмараз ва ун шудринг касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Flusilazole 400 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "swichem", name: "SWICHEM®", text: `SWICHEM® 65% с.д.г.\nОқ ва кулранг чириш касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Cyprodinil + Fludioxonil\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "udomil", name: "UDOMIL®", text: `UDOMIL® 68% с.д.г.\nФитофтороз ва милдью касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Mancozeb + Mefenoxam\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "ukvadrio", name: "UKVADRIO®", text: `UKVADRIO® 25% сус.к.\nМилдью ва пероноспороз касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Azoxystrobin 250 g/l\n· Препаратив шакли: Суспензия концентрати` },
+            { id: "upaz", name: "UPAZ®", text: `UPAZ® 10% эм.к.\nОидиум ва милдью касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Penconazole 100 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "uskor", name: "USKOR®", text: `USKOR® 25% эм.к.\nМева чириш ва доғланиш касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Difenoconazole 250 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "ustrobi", name: "USTROBI®", text: `USTROBI® 50% с.д.г.\nКалмараз, оидиум ва антракноз касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Kresoxim-methyl 500 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "xom_chem", name: "XOM CHEM®", text: `XOM CHEM® 85% н.кук.\nАнтракноз ва ун шудринг касалликларига қарши юқори самарали фунгицид\n\n· Таъсир этувчи моддаси: Copper oxychloride 850 g/kg\n· Препаратив шакли: Намланувчи кукун` }
+        ]
+    },
+    herbicides: {
+        title: "ГЕРБИЦИДЛАР",
+        path: "herbicides",
+        items: [
+            { id: "grans_max", name: "GRANS MAX®", text: `GRANS MAX® 80% с.э.г.\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Tribenuron metil 600 g/kg + Florasulam 200 g/kg\n· Препаратив шакли: Сувда эрувчи гранулалар` },
+            { id: "indazil_chem", name: "INDAZIL CHEM®", text: `INDAZIL CHEM® 50% сус.к.\nМевали боғ майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Indaziflam 500 g/l\n· Препаратив шакли: Суспензия концентрати` },
+            { id: "lancelo_chem", name: "LANCELO CHEM®", text: `LANCELO CHEM® 45% с.д.г.\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Florasulam 150 g/kg + Aminopiralid 300 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "laudi_chem", name: "LAUDI CHEM®", text: `LAUDI CHEM® 30% с.д.г.\nМаккажўхори майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Tembotrion 200 g/kg + Izoksadifen etil 100 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "pivochem", name: "PIVOCHEM®", text: `PIVOCHEM® 24% с.э.к.\nСоя, ловия ва беда майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Imazetapir 240 g/l\n· Препаратив шакли: Сувда эрувчи концентрат` },
+            { id: "suli_chem", name: "SULI CHEM®", text: `SULI CHEM® 70% с.д.г.\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Flukarbazon natriy 700 g/kg\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "uzellek", name: "UZELLEK®", text: `UZELLEK® 10,4% эм.к.\nЭкинларда бир йиллик ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Haloxyfop-R-methyl 104 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "ugezart", name: "UGEZART®", text: `UGEZART® 50% сус.к.\nСабзавот экинларида бир йиллик икки паллали ва бошоқли бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Promethrin 500 g/l\n· Препаратив шакли: Суспензия концентрати` },
+            { id: "yastar", name: "YASTAR®", text: `YASTAR® 33% эм.к.\nЭкинларда бир йиллик икки паллали ва бошоқли бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Pendimethalin 330 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "ugotril", name: "UGOTRIL®", text: `UGOTRIL® 24% эм.к.\nПиёз экилган ерларда бир йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Oxyfluorfen 240 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "uklin", name: "UKLIN®", text: `UKLIN® 3,5% м.д.\nШолидаги бир йиллик ва кўп йиллик бошоқли, икки паллали ҳамда ботқоқ бегона ўтларга қарши гербицид\n\n· Таъсир этувчи моддаси: Penoxsulam 35 g/l\n· Препаратив шакли: Мойли дисперсия` },
+            { id: "utopsho_plus", name: "UTOPSHO PLUS®", text: `UTOPSHO PLUS® 12,5% м.д.\nШолидаги бир йиллик ва кўп йиллик бошоқли ва икки паллали ёввойи ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Cyhalofop-butyl 125 g/l\n· Препаратив шакли: Мойли дисперсия` },
+            { id: "tufon_super", name: "TUFON SUPER®", text: `TUFON SUPER® 75,7% с.д.г.\nЭкин экиш режалаштирилган майдонлардаги бир йиллик ва кўп йиллик бошоқли ҳамда икки паллали бегона ўтларга қарши гербицид\n\n· Таъсир этувчи моддаси: Glyphosate 75,7%\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар` },
+            { id: "bazagran_mspa", name: "BAZAGRAN MSPA®", text: `BAZAGRAN MSPA® 46% с.э.\nШоли майдонларидаги бир йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Bentazone 400 g/l + MSPA 60 g/l\n· Препаратив шакли: Сувли эритма` },
+            { id: "glyphosate_50", name: "Glyphosate® 50%", text: `Glyphosate® 50% с.э.\nБарча турдаги бир йиллик ва кўп йиллик бегона ўтларга қарши қўлланиладиган гербицид\n\n· Таъсир этувчи моддаси: Glyphosate 500 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "renbou", name: "RENBOU®", text: `RENBOU® 3% эм.к.\nШоли майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Penoxsulam 30 g/l\n· Препаратив шакли: Эмульсия концентрати` },
+            { id: "topik_premium", name: "TOPIK PREMIUM®", text: `TOPIK PREMIUM®\nҒалла майдонларидаги бир йиллик бошоқли бегона ўтларга қарши юқори самарали гербицид\n\n· Таъсир этувчи моддаси: Clodinafop-propargyl 80 g/l + Cloquintocet-mexyl 20 g/l\n· Препаратив шакли: Эмульсия концентрати` }
+        ]
+    },
+    regulators: {
+        title: "РЕГУЛЯТОРЛАР",
+        path: "regulators",
+        items: [
+            { id: "benefit_pz", name: "BENEFIT PZ®", text: `BENEFIT PZ®\nМевалар ҳосилини йириклаштиради ва бир хил (стандарт) етилишини таъминлайди\n\n· Таркиби: N-3%; C-10% нуклеотидлар; витаминлар; аминокислоталар\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари\n· Қўллаш усули: Япроқ орқали озиқлантирилади` },
+            { id: "boroplus", name: "BOROPLUS®", text: `BOROPLUS®\nБарча турдаги қишлоқ хўжалиги экинларида бор (B) моддаси етишмаслигини бартараф этиш учун мўлжалланган восита\n\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари\n· Қўллаш усули: Япроқ орқали ҳамда илдиз орқали озиқлантириш тавсия этилади` },
+            { id: "brexil_line", name: "BREXIL LINE®", text: `BREXIL LINE®\nЭкинларни мезо ва микроэлементларга бўлган эҳтиёжини тўлиқ қондиради ва уларни етишмаслигини олдини олади\n\n· Таркиби: Мезо ва микроэлементлар (турига қараб)\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади` },
+            { id: "calbit_c", name: "CALBIT C®", text: `CALBIT C®\nКальций етишмаслиги сабабли келиб чиқадиган касалликларни олдини олувчи суюқ минерал озуқа\n\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари\n· Қўллаш усули: Япроқ орқали ҳамда илдиз орқали озиқлантирилади` },
+            { id: "control_dmp", name: "CONTROL DMP®", text: `CONTROL DMP®\npH ни мувозанатловчи, сирт фаол хусусиятга эга бўлган восита\n\n· Таркиби: Умумий азот (N) – 3%, сувда эрувчан фосфор ангидрид (P₂O₅) – 17%\n· Экин тури: Барча экин турларида\n· Қўллаш усули: Япроқ орқали қўлланилади` },
+            { id: "master", name: "MASTER®", text: `MASTER®\nСувда тўлиқ эрувчан, микрокристалл кўринишидаги макро (NPK) ва хелат шаклдаги микроэлементли озуқа\n\n· Таркиби: NPK + микроэлементлар (EDTA)\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади` },
+            { id: "viva", name: "VIVA®", text: `VIVA®\nИлдиз тизимини ривожлантирувчи ҳамда ўсимлик ўсишини фаоллаштирувчи биологик фаол восита\n\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Илдиз орқали қўлланилади` },
+            { id: "yield_on", name: "YIELD ON®", text: `YIELD ON®\nҲосилдорликни оширишга хизмат қилувчи биологик фаол восита\n\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари\n· Қўллаш усули: Япроқ орқали қўлланилади` },
+            { id: "radifarm", name: "RADIFARM®", text: `RADIFARM®\nИлдиз тизимини кучайтирувчи ҳамда ўсимликларни стресс ҳолатлардан чиқаришга ёрдам берувчи восита\n\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Илдиз орқали қўлланилади` },
+            { id: "sweet", name: "SWEET®", text: `SWEET®\nМеваларнинг шаклланиши ва сифатли етилишини таъминловчи биологик фаол восита\n\n· Экин тури: Мевали дарахтлар ва сабзавотлар\n· Қўллаш усули: Япроқ орқали қўлланилади` },
+            { id: "megafol", name: "MEGAFOL®", text: `MEGAFOL®\nЎсимликларни стресс ҳолатларда ҳимоя қилувчи ҳамда тикловчи биологик фаол восита\n\n· Таркиби: N-3%, K₂O-8%, C-9%\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади` },
+            { id: "plantafol", name: "PLANTAFOL®", text: `PLANTAFOL®\nСувда тўлиқ эрувчан макро ва микроэлементларга бой комплекс озуқа воситаси\n\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Япроқ орқали қўлланилади` },
+            { id: "mc_extra", name: "MC EXTRA®", text: `MC EXTRA®\nЎсимлик ўсишини фаоллаштирувчи ҳамда ҳосилдорликни оширишга қаратилган биологик фаол восита\n\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Япроқ орқали қўлланилади` },
+            { id: "mc_set", name: "MC SET®", text: `MC SET®\nГуллаш, чангланиш ва мева тугиш жараёнини яхшилашга кўмаклашувчи табиий фитогармон\n\n· Таркиби: Бор (B) ва Рух (Zn)\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади` },
+            { id: "mc_cream", name: "MC CREAM®", text: `MC CREAM®\nЎсимликларнинг физиологик фаоллигини оширувчи ҳамда ривожланишини яхшиловчи восита\n\n· Экин тури: Барча турдаги экинлар\n· Қўллаш усули: Япроқ орқали қўлланилади` }
+        ]
+    },
+    defoliants: {
+        title: "ДЕФОЛИАНТ",
+        path: "defoliants",
+        items: [
+            { id: "udropp", name: "UDROPP®", text: `UDROPP® 54% м.сус.к.\nҒўза ҳосилини тез етилиши ва теримдан аввал баргларни тўкиш учун қўлланиладиган дефолиант\n\n· Таъсир этувчи моддаси: Thidiazuron 360 g/l + Diuron 180 g/l\n· Препаратив шакли: Мойли суспензия концентрати` }
+        ]
+    }
 };
 
-const app=document.getElementById("app");
-const header=document.getElementById("header");
+const app = document.getElementById("app");
+const header = document.getElementById("header");
 
-function home(){
-header.innerText="CHEMICAL SOLUTIONS";
-app.innerHTML=`<div class="main-menu">
-<div class="cat-btn" onclick="list('insecticides')">Инсектицидлар</div>
-<div class="cat-btn" onclick="list('fungicides')">Фунгицидлар</div>
-<div class="cat-btn" onclick="list('herbicides')">Гербицидлар</div>
-<div class="cat-btn" onclick="list('regulators')">Регуляторлар</div>
-<div class="cat-btn" onclick="list('defoliants')">Дефолиант</div>
-</div>`;
+function home() {
+    header.innerText = "CHEMICAL SOLUTIONS";
+    app.innerHTML = `
+        <div class="main-menu">
+            <div class="cat-btn" onclick="list('insecticides')">Инсектицидлар</div>
+            <div class="cat-btn" onclick="list('fungicides')">Фунгицидлар</div>
+            <div class="cat-btn" onclick="list('herbicides')">Гербицидлар</div>
+            <div class="cat-btn" onclick="list('regulators')">Регуляторлар</div>
+            <div class="cat-btn" onclick="list('defoliants')">Дефолиант</div>
+        </div>`;
 }
 
-function list(key){
-const c=DATA[key];
-header.innerText=c.title;
-app.innerHTML=`<div class="product-list">${
-c.items.map(p=>`<div class="prod-btn" onclick="detail('${key}','${p.id}')">${p.name}</div>`).join("")
-}</div><div class="nav-btn" onclick="home()">⬅ ОРҚАГА</div>`;
+function list(key) {
+    const c = DATA[key];
+    header.innerText = c.title;
+    app.innerHTML = `
+        <div class="product-list">${
+            c.items.map(p => `<div class="prod-btn" onclick="detail('${key}','${p.id}')">${p.name}</div>`).join("")
+        }</div>
+        <div class="nav-btn" onclick="home()">⬅ ОРҚАГА</div>`;
 }
 
-function detail(k,id){
-const c=DATA[k];
-const p=c.items.find(x=>x.id===id);
-header.innerText=p.name;
-const base=`images/${c.path}/${p.id}`;
-app.innerHTML=`<div class="details">
-<div class="card"><h3>Препарат</h3><img src="${base}/product.png" onerror="this.src='images/no-image.png'"></div>
-${p.text?`<div class="info-text">${p.text}</div>`:""}
-<div class="card"><h3>Маълумот</h3><img src="${base}/pest.jpg" onerror="this.src='images/no-image.png'"></div>
-</div><div class="nav-btn" onclick="list('${k}')">⬅ ОРҚАГА</div>`;
+function detail(k, id) {
+    const c = DATA[k];
+    const p = c.items.find(x => x.id === id);
+    header.innerText = p.name;
+    const base = `images/${c.path}/${p.id}`;
+    app.innerHTML = `
+        <div class="details">
+            <div class="card">
+                <h3>Препарат</h3>
+                <img src="${base}/product.png" onerror="this.src='images/no-image.png'">
+            </div>
+            ${p.text ? `<div class="info-text">${p.text}</div>` : ""}
+            <div class="card">
+                <h3>Маълумот</h3>
+                <img src="${base}/pest.jpg" onerror="this.src='images/no-image.png'">
+            </div>
+        </div>
+        <div class="nav-btn" onclick="list('${k}')">⬅ ОРҚАГА</div>`;
 }
 
 home();
