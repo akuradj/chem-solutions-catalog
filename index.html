@@ -222,57 +222,64 @@ function showList(key) {
     window.scrollTo(0,0);
 }
 
-function showDetail(key, id) {
-    const item = DATA[key].items.find(i => i.id === id);
-    let html = `
-        <div class="details">
-            <div class="card">
-                <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
-                <img src="images/${DATA[key].path}/${id}/product.png" class="product-img" onerror="this.src='images/no-image.png'">
-            </div>
-            <div class="info-text">${item.text}</div>
-            <div class="card">
-                <h3>🔍 БАТАФСИЛ</h3>
-                <img src="images/${DATA[key].path}/${id}/pest.jpg" onerror="this.src='images/no-image.png'">
-            </div>
-            <div class="nav-btn" onclick="showList('${key}')">⬅ РЎЙХАТГА ҚАЙТИШ</div>
-        </div>
-    `;
-    document.getElementById('app').innerHTML = html;
-    window.scrollTo(0,0);
-}
-<div id="app"></div> <div id="zoom-overlay" onclick="this.style.display='none'">
-        <img id="zoomed-img" src="">
-    </div>
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+    // Функция связи (копирует номер и показывает Alert)
+    function makeCall(name, phone) {
+        const cleanPhone = phone.replace(/[^\d+]/g, '');
+        const storage = document.createElement('textarea');
+        storage.value = cleanPhone;
+        document.body.appendChild(storage);
+        storage.select();
+        document.execCommand('copy');
+        document.body.removeChild(storage);
 
-        // Функция связи (копирует номер и показывает Alert)
-        function makeCall(name, phone) {
-            const cleanPhone = phone.replace(/[^\d+]/g, '');
-            const storage = document.createElement('textarea');
-            storage.value = cleanPhone;
-            document.body.appendChild(storage);
-            storage.select();
-            document.execCommand('copy');
-            document.body.removeChild(storage);
-
-            tg.showAlert("👤 " + name + "\n📞 " + phone + "\n\nРақам нусхаланди! Энди уни телефон қилиш жойига 'Вставить' қилишингиз мумкин.");
-            
-            // Попытка прямого вызова (если телефон позволит)
-            tg.openLink("tel:" + cleanPhone);
-        }
-
-        function openZoom(src) {
-            document.getElementById('zoomed-img').src = src;
-            document.getElementById('zoom-overlay').style.display = 'flex';
-        }
-
-        // ... остальной код (DATA, CONTACTS, showHome и т.д.) ...
+        tg.showAlert("👤 " + name + "\n📞 " + phone + "\n\nРақам нусхаланди! Энди уни телефон қилиш жойига 'Вставить' қилишингиз мумкин.");
         
-        showHome(); // Запуск
-    </script>
+        // Попытка прямого вызова
+        tg.openLink("tel:" + cleanPhone);
+    }
+
+    // Функция открытия ЗУМА
+    function openZoom(src) {
+        document.getElementById('zoomed-img').src = src;
+        document.getElementById('zoom-overlay').style.display = 'flex';
+    }
+
+    // Твоя исправленная функция деталей товара
+    function showDetail(key, id) {
+        const item = DATA[key].items.find(i => i.id === id);
+        const imgPath1 = `images/${DATA[key].path}/${id}/product.png`;
+        const imgPath2 = `images/${DATA[key].path}/${id}/pest.jpg`;
+        
+        let html = `
+            <div class="details">
+                <div class="card">
+                    <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
+                    <img src="${imgPath1}" class="product-img" onerror="this.src='images/no-image.png'">
+                </div>
+                <div class="info-text" style="padding: 15px; white-space: pre-line;">${item.text}</div>
+                <div class="card" onclick="openZoom('${imgPath2}')">
+                    <h3>🔍 БАТАФСИЛ (БОСИНГ)</h3>
+                    <img src="${imgPath2}" onerror="this.src='images/no-image.png'">
+                </div>
+                <div class="nav-btn" onclick="showList('${key}')">⬅ РЎЙХАТГА ҚАЙТИШ</div>
+            </div>
+        `;
+        document.getElementById('app').innerHTML = html;
+        window.scrollTo(0,0);
+    }
+
+    // !!! ВАЖНО: Сюда вставь свои DATA и CONTACTS, если их нет выше !!!
+
+    showHome(); // Запуск начального экрана
+</script>
+
+<div id="zoom-overlay" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; justify-content:center; align-items:center;">
+    <img id="zoomed-img" src="" style="max-width:95%; max-height:90%; object-fit:contain;">
+</div>
+
 </body>
 </html>
