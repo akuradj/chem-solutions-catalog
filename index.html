@@ -72,17 +72,17 @@ const COLORS = {
 const DATA = {
     insecticides: { 
         title: "ИНСЕКТИЦИДЛАР", path: "insecticides", items: [
-            { id: "akara_max", name: "AKARA MAX®", text: "AKARA MAX® 66% эм.к.\nЗарарли каналарга қарши юқори самарали ихтисослашган акарицид\n\n· Таъсир этувчи моддаси: Propargit 600 g/L + Geksitiazoks 60 g/l" },
-            { id: "komfidor_profi", name: "KOMFIDOR PROFI®", text: "KOMFIDOR PROFI® 20% с.э.к.\nЗарарли ҳашаротларга қарши юқори самарали системали инсектицид\n\n· Таъсир этувчи моддаси: Imidacloprid 200 g/l" },
-            { id: "mospi_chem", name: "MOSPI CHEM®", text: "MOSPI CHEM® 20% н.кук.\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектицид\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg" },
+            { id: "akara_max", name: "AKARA MAX®", text: "AKARA MAX® 66% эм.к.\nЗарарли каналарга қарши юқори самарали акарицид\n\n· Таъсир этувчи моддаси: Propargit 600 g/L + Geksitiazoks 60 g/l" },
+            { id: "komfidor_profi", name: "KOMFIDOR PROFI®", text: "KOMFIDOR PROFI® 20% с.э.к.\nСистемали инсектицид\n\n· Таъсир этувчи моддаси: Imidacloprid 200 g/l" },
+            { id: "mospi_chem", name: "MOSPI CHEM®", text: "MOSPI CHEM® 20% н.кук.\nИхтисослашган инсектицид\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg" },
             { id: "mospi_max", name: "MOSPI MAX®", text: "MOSPI MAX® 35% с.д.г.\n· Таъсир этувчи моддаси: Acetamiprid 150 g/kg + Flonicamid 200 g/kg" },
             { id: "pirido_chem", name: "PIRIDO CHEM®", text: "PIRIDO CHEM® 20% н.кук.\n· Таъсир этувчи моддаси: Piridaben 200 g/kg" },
             { id: "tepek_chem", name: "TEPEK CHEM®", text: "TEPEK CHEM® 50% с.д.г.\n· Таъсир этувчи моддаси: Flonicamid 500 g/kg" },
             { id: "ucefat", name: "UCEFAT®", text: "UCEFAT® 75% э.кук.\n· Таъсир этувчи моддаси: Acephate 750 g/kg" },
             { id: "udonis", name: "UDONIS®", text: "UDONIS® 5% с.к.\n· Таъсир этувчи моддаси: Fipronil 50 g/l" },
             { id: "ukarat_forte", name: "UKARAT FORTE®", text: "UKARAT FORTE® 5% эм.к.\n· Таъсир этувчи моддаси: Lambda-cyhalothrin 50 g/l" },
-            { id: "ukleym", name: "UKLEYM®", text: "UKLEYM® 5% с.э.г.\nИнсектицид ва акарицидларнинг таъсирини кучайтирувчи ёрдамчи модда" },
-            { id: "upolit", name: "UPOLIT®", text: "UPOLIT® 75% эм.к.\n· Таъсир этувчи моддаси: Profenofos 650 g/l + Cypermethrin 100 g/l" },
+            { id: "ukleym", name: "UKLEYM®", text: "UKLEYM® 5% с.э.г.\nЁрдамчи модда" },
+            { id: "upolit", name: "UPOLIT®", text: "UPOLIT® 75% эм.к.\n· Profenofos + Cypermethrin" },
             { id: "uprokleym_fit", name: "UPROKLEYM FIT®", text: "UPROKLEYM FIT® 50% с.э.г." },
             { id: "uspilan", name: "USPILAN®", text: "USPILAN® 20% н.кук." },
             { id: "utastar", name: "UTASTAR®", text: "UTASTAR® 10% эм.к." },
@@ -92,8 +92,8 @@ const DATA = {
     },
     herbicides: { 
         title: "ГЕРБИЦИДЛАР", path: "herbicides", items: [
-            { id: "grans_max", name: "GRANS MAX®", text: "GRANS MAX® 80% с.э.г.\nИкки паллали бегона ўтларга қарши гербицид." },
-            { id: "indazil_chem", name: "INDAZIL CHEM®", text: "INDAZIL CHEM® 50% сус.к.\nМевали боғлар учун гербицид." },
+            { id: "grans_max", name: "GRANS MAX®", text: "GRANS MAX® 80% с.э.г.\n· Таъсир этувчи моддаси: Tribenuron metil + Florasulam" },
+            { id: "indazil_chem", name: "INDAZIL CHEM®", text: "INDAZIL CHEM® 50% сус.к.\n· Таъсир этувчи моддаси: Indaziflam" },
             { id: "lancelo_chem", name: "LANCELO CHEM®", text: "LANCELO CHEM® 45% с.д.г." },
             { id: "laudi_chem", name: "LAUDI CHEM®", text: "LAUDI CHEM® 30% с.д.г." },
             { id: "pivochem", name: "PIVOCHEM®", text: "PIVOCHEM® 24% с.э.к." },
@@ -113,8 +113,8 @@ const DATA = {
     },
     fungicides: { 
         title: "ФУНГИЦИДЛАР", path: "fungicides", items: [
-            { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "FOSETIL CHEM® 80% н.кук.\nБактериал куйишга қарши." },
-            { id: "panchem", name: "PANCHEM®", text: "PANCHEM® 40% эм.к." },
+            { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "FOSETIL CHEM® 80% н.кук.\n· Fosetyl aluminium" },
+            { id: "panchem", name: "PANCHEM®", text: "PANCHEM® 40% эм.к.\n· Flusilazole" },
             { id: "swichem", name: "SWICHEM®", text: "SWICHEM® 65% с.д.г." },
             { id: "udomil", name: "UDOMIL®", text: "UDOMIL® 68% с.д.г." },
             { id: "ukvadrio", name: "UKVADRIO®", text: "UKVADRIO® 25% сус.к." },
@@ -127,8 +127,8 @@ const DATA = {
     regulators: { 
         title: "РЕГУЛЯТОРЛАР", path: "regulators", items: [
             { id: "benefit_pz", name: "BENEFIT PZ®", text: "Меваларни йириклаштириш учун." },
-            { id: "boroplus", name: "BOROPLUS®", text: "Бор етишмаслигини олдини олиш учун." },
-            { id: "brexil_line", name: "BREXIL LINE®", text: "Микроэлементлар комплекси." },
+            { id: "boroplus", name: "BOROPLUS®", text: "Бор етишмаслигини олдини олиш." },
+            { id: "brexil_line", name: "BREXIL LINE®", text: "Микроэлементлар." },
             { id: "calbit_c", name: "CALBIT C®", text: "Кальций озуқаси." },
             { id: "control_dmp", name: "CONTROL DMP®", text: "pH мувозанатловчи." },
             { id: "master", name: "MASTER®", text: "NPK + Микроэлементлар." },
@@ -136,11 +136,11 @@ const DATA = {
             { id: "yield_on", name: "YIELD ON®", text: "Ҳосилдорликни оширувчи." },
             { id: "radifarm", name: "RADIFARM®", text: "Илдиз тизимини кучайтирувчи." },
             { id: "sweet", name: "SWEET®", text: "Сифатли етилиш учун." },
-            { id: "megafol", name: "MEGAFOL®", text: "Стрессга қарши восита." },
-            { id: "plantafol", name: "PLANTAFOL®", text: "Япроқ орқали озиқлантириш." },
+            { id: "megafol", name: "MEGAFOL®", text: "Стрессга қарши." },
+            { id: "plantafol", name: "PLANTAFOL®", text: "Макро ва микроэлементлар." },
             { id: "mc_extra", name: "MC EXTRA®", text: "Биологик фаол восита." },
-            { id: "mc_set", name: "MC SET®", text: "Гуллаш ва чангланиш учун." },
-            { id: "mc_cream", name: "MC CREAM®", text: "Физиологик фаоллик учун." }
+            { id: "mc_set", name: "MC SET®", text: "Гуллаш учун." },
+            { id: "mc_cream", name: "MC CREAM®", text: "Физиологик фаоллик." }
         ]
     },
     defoliants: { 
