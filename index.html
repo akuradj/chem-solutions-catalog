@@ -52,14 +52,18 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 // ФУНКЦИЯ ЗВОНКА С ПОДТВЕРЖДЕНИЕМ
-function makeCall(phone) {
-    const num = phone.replace(/[^\d+]/g, '');
-
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-        Telegram.WebApp.openLink("tel:" + num);
-    } else {
-        window.location.href = "tel:" + num;
-    }
+function copyPhone(phone) {
+    navigator.clipboard.writeText(phone).then(() => {
+        if (Telegram.WebApp.showPopup) {
+            Telegram.WebApp.showPopup({
+                title: "Рақам нусхаланди",
+                message: phone + "\nТелефон иловасида қўнғироқ қилинг",
+                buttons: [{ type: "ok", text: "OK" }]
+            });
+        } else {
+            alert("Рақам нусхаланди: " + phone);
+        }
+    });
 }
 
 // ДАННЫЕ (DATA)
