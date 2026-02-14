@@ -6,28 +6,34 @@
     <title>Chemical Solutions</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --main: #00796b; }
-        body { margin: 0; font-family: sans-serif; background: #f0f2f5; padding-bottom: 20px; }
-        header { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 10; }
-        
-        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .cat-btn { background: var(--main); color: white; border-radius: 10px; padding: 20px 5px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; border: none; }
-        
-        .contact-card { background: white; margin: 10px 15px; padding: 12px; border-radius: 10px; border-left: 5px solid var(--main); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .call-btn { 
-            background: #2e7d32; color: white !important; padding: 8px 15px; 
-            border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; 
-            display: inline-block;
-        }
+        :root { --main: #00796b; --bg: #f0f2f5; }
+        body { margin: 0; font-family: -apple-system, sans-serif; background: var(--bg); color: #333; -webkit-tap-highlight-color: transparent; }
+        header { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 18px; }
 
+        /* Главное меню */
+        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+        .cat-btn { background: var(--main); color: white; border-radius: 12px; padding: 20px 5px; text-align: center; cursor: pointer; font-weight: bold; font-size: 12px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* Контакты */
+        .contact-card { background: white; margin: 10px 15px; padding: 15px; border-radius: 12px; border-left: 5px solid var(--main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .call-btn { background: #2e7d32; color: white !important; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: bold; cursor: pointer; }
+
+        /* Сетка товаров */
         .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .item-card { background: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; color: var(--main); border: 1px solid #ccc; }
+        .item-card { background: white; padding: 15px 10px; border-radius: 10px; text-align: center; font-weight: bold; color: var(--main); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; min-height: 50px; }
+
+        /* Карточка товара */
+        .card { background: white; margin: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0; padding: 12px; background: #f8f9fa; font-size: 14px; text-align: center; border-bottom: 1px solid #eee; color: var(--main); }
+        .info { padding: 15px; line-height: 1.6; white-space: pre-line; font-size: 14px; }
         
-        .card { background: white; margin: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .info { padding: 15px; line-height: 1.5; white-space: pre-line; }
-        .nav-btn { background: #333; color: white; padding: 15px; text-align: center; border-radius: 10px; margin: 15px; cursor: pointer; }
-        
-        #zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        /* Кнопка назад */
+        .nav-btn { background: #333; color: white; padding: 16px; text-align: center; border-radius: 12px; margin: 15px; cursor: pointer; font-weight: bold; }
+
+        /* Полноэкранный зум */
+        #zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+        #zoom-overlay img { max-width: 95%; max-height: 90%; object-fit: contain; }
         img { width: 100%; display: block; }
     </style>
 </head>
@@ -35,26 +41,30 @@
 
 <header><h1>CHEMICAL SOLUTIONS</h1></header>
 <div id="app"></div>
-<div id="zoom-overlay" onclick="this.style.display='none'"><img id="ziomed" src=""></div>
+
+<div id="zoom-overlay" onclick="this.style.display='none'">
+    <div style="position:absolute; top:20px; right:20px; color:white; font-size:30px;">&times;</div>
+    <img id="zoomed-img" src="">
+</div>
 
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Функция звонка — используем самый простой метод
+// ФУНКЦИЯ ЗВОНКА С ПОДТВЕРЖДЕНИЕМ
 function makeCall(phone) {
     const num = phone.replace(/[^\d+]/g, '');
-    // Пробуем сначала метод ТГ, если нет - просто редирект
-    if (tg.openLink) {
-        tg.openLink("tel:" + num);
-    } else {
-        window.location.href = "tel:" + num;
-    }
+    tg.showConfirm("Қўнғироқ қилмоқчимисиз?\n" + phone, function(ok) {
+        if (ok) {
+            tg.openLink("tel:" + num);
+        }
+    });
 }
 
+// ДАННЫЕ (DATA)
 const DATA = {
     insecticides: { title: "ИНСЕКТИЦИДЛАР", path: "insecticides", items: [
-        { id: "akara_max", name: "AKARA MAX®", text: "Propargit 600 g/L" }
+        { id: "akara_max", name: "AKARA MAX®", text: "Propargit 600 g/L + Geksitiazoks 60 g/l\nЗарарли каналарга қарши юқори самарали акарицид." }
     ]},
     herbicides: { title: "ГЕРБИЦИДЛАР", path: "herbicides", items: [] },
     fungicides: { title: "ФУНГИЦИДЛАР", path: "fungicides", items: [] },
@@ -67,51 +77,61 @@ const CONTACTS = [
     { r: "Тошкент вилояти", n: "Джураев Бекзод", t: "+998773017060" }
 ];
 
+// ГЛАВНЫЙ ЭКРАН
 function showHome() {
     let html = `<div class="main-menu">
-        <div class="cat-btn" onclick="showList('herbicides')">ГЕРБИЦИДЛАР</div>
-        <div class="cat-btn" onclick="showList('insecticides')">ИНСЕКТИЦИДЛАР</div>
-        <div class="cat-btn" onclick="showList('fungicides')">ФУНГИЦИДЛАР</div>
-        <div class="cat-btn" onclick="showList('regulators')">РЕГУЛЯТОРЛАР</div>
-        <div class="cat-btn" style="grid-column: span 2;" onclick="showList('defoliants')">ДЕФОЛИАНТЛАР</div>
+        <div class="cat-btn" onclick="showList('herbicides')">🌿 ГЕРБИЦИДЛАР</div>
+        <div class="cat-btn" onclick="showList('insecticides')">🐜 ИНСЕКТИЦИДЛАР</div>
+        <div class="cat-btn" onclick="showList('fungicides')">🍄 ФУНГИЦИДЛАР</div>
+        <div class="cat-btn" onclick="showList('regulators')">🧪 РЕГУЛЯТОРЛАР</div>
+        <div class="cat-btn" style="grid-column: span 2;" onclick="showList('defoliants')">🍂 ДЕФОЛИАНТЛАР</div>
     </div>`;
     
     CONTACTS.forEach(c => {
         html += `<div class="contact-card">
-            <div style="font-weight:bold; color:#00796b; margin-bottom:5px;">${c.r}</div>
+            <div style="font-weight:bold; color:var(--main); margin-bottom:5px; font-size:14px;">${c.r}</div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:13px;">${c.n}</span>
-                <a href="tel:${c.t.replace(/[^\d+]/g, '')}" class="call-btn" onclick="makeCall('${c.t}'); return false;">Қўнғироқ</a>
+                <div class="call-btn" onclick="makeCall('${c.t}')">Қўнғироқ</div>
             </div>
         </div>`;
     });
     document.getElementById('app').innerHTML = html;
+    window.scrollTo(0,0);
 }
 
+// СПИСОК ТОВАРОВ
 function showList(key) {
     const cat = DATA[key];
-    let html = `<h3 style="text-align:center;">${cat.title}</h3><div class="prod-grid">`;
-    if(cat.items.length === 0) html += `<p style="grid-column:span 2; text-align:center;">Тез орада...</p>`;
+    let html = `<h3 style="text-align:center; color:var(--main);">${cat.title}</h3><div class="prod-grid">`;
+    if(cat.items.length === 0) html += `<p style="grid-column:span 2; text-align:center; color:#999; padding:20px;">Тез орада...</p>`;
     cat.items.forEach(i => {
         html += `<div class="item-card" onclick="showDetail('${key}','${i.id}')">${i.name}</div>`;
     });
-    html += `</div><div class="nav-btn" onclick="showHome()">ОРҚАГА</div>`;
+    html += `</div><div class="nav-btn" onclick="showHome()">⬅ ОРҚАГА</div>`;
     document.getElementById('app').innerHTML = html;
+    window.scrollTo(0,0);
 }
 
+// ДЕТАЛИ ТОВАРА
 function showDetail(key, id) {
     const item = DATA[key].items.find(i => i.id === id);
     const img1 = `images/${DATA[key].path}/${id}/product.png`;
     const img2 = `images/${DATA[key].path}/${id}/pest.jpg`;
+    
     document.getElementById('app').innerHTML = `
-        <div class="card"><h3>Кўриниши</h3><img src="${img1}" onerror="this.src='images/no-image.png'"></div>
-        <div class="info"><b>${item.name}</b>\n${item.text}</div>
-        <div class="card" onclick="document.getElementById('ziomed').src='${img2}'; document.getElementById('zoom-overlay').style.display='flex'">
-            <h3>Батафсил (Зум)</h3>
+        <div class="card">
+            <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
+            <img src="${img1}" onerror="this.src='images/no-image.png'">
+        </div>
+        <div class="info"><b>${item.name}</b>\n\n${item.text}</div>
+        <div class="card" onclick="document.getElementById('zoomed-img').src='${img2}'; document.getElementById('zoom-overlay').style.display='flex'">
+            <h3>🔍 БАТАФСИЛ (РАСМНИ БОСИНГ)</h3>
             <img src="${img2}" onerror="this.src='images/no-image.png'">
         </div>
-        <div class="nav-btn" onclick="showList('${key}')">ҚАЙТИШ</div>
+        <div class="nav-btn" onclick="showList('${key}')">⬅ РЎЙХАТГА ҚАЙТИШ</div>
     `;
+    window.scrollTo(0,0);
 }
 
 showHome();
