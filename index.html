@@ -54,11 +54,12 @@ tg.expand();
 // ФУНКЦИЯ ЗВОНКА С ПОДТВЕРЖДЕНИЕМ
 function makeCall(phone) {
     const num = phone.replace(/[^\d+]/g, '');
-    tg.showConfirm("Қўнғироқ қилмоқчимисиз?\n" + phone, function(ok) {
-        if (ok) {
-            tg.openLink("tel:" + num);
-        }
-    });
+
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
+        Telegram.WebApp.openLink("tel:" + num);
+    } else {
+        window.location.href = "tel:" + num;
+    }
 }
 
 // ДАННЫЕ (DATA)
