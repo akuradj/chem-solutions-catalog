@@ -1,244 +1,143 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Chemical Solutions</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-    :root {
-        --bg: #f4f7f6;
-        --herbicide: #2e7d32;
-        --insecticide: #800020;
-        --fungicide: #0077be;
-        --regulator: #ff4500;
-        --defoliant: #8e44ad;
-        --current-color: #00796b;
-    }
-    body { margin: 0; font-family: -apple-system, sans-serif; background: var(--bg); padding-bottom: 40px; }
-    header { background: var(--current-color); color: #fff; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 10; }
-    header div { font-size: 18px; font-weight: bold; }
-    
-    .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-    .cat-btn { color: #fff; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-    
-    .bg-her { background: var(--herbicide); }
-    .bg-ins { background: var(--insecticide); }
-    .bg-fun { background: var(--fungicide); }
-    .bg-reg { background: var(--regulator); }
-    .bg-def { background: var(--defoliant); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chemical Solutions</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --bg: #f0f2f5; --main: #00796b; }
+        body { margin: 0; font-family: -apple-system, sans-serif; background: var(--bg); user-select: none; -webkit-tap-highlight-color: transparent; }
+        header { background: var(--main); color: #fff; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        header h1 { margin: 0; font-size: 18px; text-transform: uppercase; }
 
-    .item-card { background: #fff; padding: 18px 10px; border-radius: 12px; text-align: center; font-weight: bold; color: var(--current-color); border: 2px solid var(--current-color); font-size: 13px; display: flex; align-items: center; justify-content: center; min-height: 50px; }
-    .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+        /* Меню категорий */
+        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+        .cat-btn { color: #fff; border-radius: 12px; padding: 22px 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 11px; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .bg-her { background: #2e7d32; } .bg-ins { background: #800020; } .bg-fun { background: #0077be; } .bg-reg { background: #ff4500; } .bg-def { background: #8e44ad; }
 
-    .contact-card { background: #fff; margin: 0 15px 12px; padding: 15px; border-radius: 12px; border-left: 5px solid #00796b; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .region-name { font-weight: bold; color: #00796b; display: block; margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-    
-    .info-text { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid var(--current-color); line-height: 1.6; font-size: 14px; white-space: pre-line; color: #333; }
-    
-    .call-btn { 
-        display: inline-block; 
-        background: #00796b; 
-        color: #fff; 
-        padding: 8px 15px; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        font-weight: bold; 
-        font-size: 13px;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .call-btn:active { opacity: 0.7; }
+        /* Сетка товаров */
+        .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .item-card { background: #fff; padding: 15px 5px; border-radius: 10px; text-align: center; font-weight: bold; border: 1px solid #ddd; font-size: 12px; min-height: 45px; display: flex; align-items: center; justify-content: center; color: var(--main); }
 
-    .nav-btn { background: #333; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 15px; cursor: pointer; font-weight: bold; }
-    img { width: 100%; display: block; }
-    .product-img { max-width: 75%; margin: 0 auto; padding: 10px; object-fit: contain; }
-    .card { background: #fff; border-radius: 15px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #eee; }
-    .card h3 { margin: 0; padding: 12px; background: #f8f9fa; color: var(--current-color); text-align: center; font-size: 14px; }
-</style>
+        /* Секция контактов */
+        .contact-card { background: #fff; margin: 0 15px 10px; padding: 12px; border-radius: 10px; border-left: 5px solid var(--main); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .region-name { font-weight: bold; color: var(--main); font-size: 13px; display: block; margin-bottom: 6px; }
+        .call-btn { background: var(--main); color: #fff !important; padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; text-align: center; }
+
+        /* Карточка товара */
+        .card { background: #fff; border-radius: 15px; margin: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0; padding: 10px; background: #f8f9fa; font-size: 13px; text-align: center; color: var(--main); }
+        .info-box { padding: 15px; font-size: 14px; line-height: 1.6; white-space: pre-line; color: #444; }
+        img { width: 100%; display: block; height: auto; }
+
+        /* Зум (Overlay) */
+        #zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
+        #zoom-overlay img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .nav-btn { background: #333; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 15px; font-weight: bold; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-<header id="header">
-    <div id="header-title">CHEMICAL SOLUTIONS</div>
-    <small>Юқори сифат ва самарадорлик</small>
-</header>
+<header><h1>CHEMICAL SOLUTIONS</h1></header>
 
 <div id="app"></div>
+
+<div id="zoom-overlay" onclick="this.style.display='none'">
+    <img id="zoomed-img" src="">
+</div>
 
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Твоя функция звонка
-function callPhone(phone) {
-    const cleanPhone = phone.replace(/\s+/g, '');
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-        Telegram.WebApp.openLink("tel:" + cleanPhone);
-    } else {
-        window.location.href = "tel:" + cleanPhone;
-    }
+// ФУНКЦИЯ ЗВОНКА (Работает через API Telegram)
+function makeCall(phone) {
+    const cleanPhone = phone.replace(/[^\d+]/g, ''); 
+    tg.openLink("tel:" + cleanPhone);
 }
 
-const COLORS = {
-    main: "#00796b",
-    herbicides: "#2e7d32",
-    insecticides: "#800020",
-    fungicides: "#0077be",
-    regulators: "#ff4500",
-    defoliants: "#8e44ad"
-};
+// ФУНКЦИЯ ЗУМА
+function openZoom(src) {
+    document.getElementById('zoomed-img').src = src;
+    document.getElementById('zoom-overlay').style.display = 'flex';
+}
 
+// --- ТВОИ ДАННЫЕ (DATA) ---
 const DATA = {
     insecticides: { 
-        title: "ИНСЕКТИЦИДЛАР", path: "insecticides", items: [
-            { id: "akara_max", name: "AKARA MAX®", text: "AKARA MAX® 66% эм.к. [cite: 18]\nЗарарли каналарга қарши юқори самарали ихтисослашган акарицид [cite: 18]\n\n· Таъсир этувчи моддаси: Propargit 600 g/L + Geksitiazoks 60 g/l [cite: 18]\n· Препаратив шакли: Эмульсия концентрати [cite: 18]" },
-            { id: "komfidor_profi", name: "KOMFIDOR PROFI®", text: "KOMFIDOR PROFI® 20% с.э.к. [cite: 19]\nЗарарли ҳашаротларга қарши юқори самарали системали инсектицид [cite: 19]\n\n· Таъсир этувчи моддаси: Imidacloprid 200 g/l [cite: 19]\n· Препаратив шакли: Сувда эрувчи концентрат [cite: 19]" },
-            { id: "mospi_chem", name: "MOSPI CHEM®", text: "MOSPI CHEM® 20% н.кук. [cite: 20]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектицид [cite: 20]\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg [cite: 20]\n· Препаратив шакли: Намланувчи кукун [cite: 20]" },
-            { id: "mospi_max", name: "MOSPI MAX®", text: "MOSPI MAX® 35% с.д.г. [cite: 21]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектицид [cite: 21]\n\n· Таъсир этувчи моддаси: Acetamiprid 150 g/kg + Flonicamid 200 g/kg [cite: 21]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 21]" },
-            { id: "pirido_chem", name: "PIRIDO CHEM®", text: "PIRIDO CHEM® 20% н.кук. [cite: 22]\nЗарарли каналарга тизимли таъсир қилувчи ихтисослашган акарицид [cite: 22]\n\n· Таъсир этувчи моддаси: Piridaben 200 g/kg [cite: 22]\n· Препаратив шакли: Намланувчи кукун [cite: 22]" },
-            { id: "tepek_chem", name: "TEPEK CHEM®", text: "TEPEK CHEM® 50% с.д.г. [cite: 23]\nЗараркунанда ҳашаротларга қарши юқори самарали ихтисослашган инсектицид [cite: 23]\n\n· Таъсир этувчи моддаси: Flonicamid 500 g/kg [cite: 23]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 23]" },
-            { id: "ucefat", name: "UCEFAT®", text: "UCEFAT® 75% э.кук. [cite: 24]\nЗарарли ҳашаротларга қарши юқори самарали инсектицид [cite: 24]\n\n· Таъсир этувчи моддаси: Acephate 750 g/kg [cite: 24]\n· Препаратив шакли: Эрувчи кукун [cite: 24]" },
-            { id: "udonis", name: "UDONIS®", text: "UDONIS® 5% с.к. [cite: 25]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектоакарицид [cite: 25]\n\n· Таъсир этувчи моддаси: Fipronil 50 g/l [cite: 25]\n· Препаратив шакли: Суспензия концентрати [cite: 25]" },
-            { id: "ukarat_forte", name: "UKARAT FORTE®", text: "UKARAT FORTE® 5% эм.к. [cite: 26]\nЗарарли ҳашаротлар ва каналарга қарши самараси исботланган инсектоакарицид [cite: 26]\n\n· Таъсир этувчи моддаси: Lambda-cyhalothrin 50 g/L [cite: 26]\n· Препаратив шакли: Эмульсия концентрати [cite: 26]" },
-            { id: "ukleym", name: "UKLEYM®", text: "UKLEYM® 5% с.э.г. [cite: 27]\nИнсектицид ва акарицидларнинг таъсирини кучайтирувчи ёрдамчи модда [cite: 27]\n\n· Таъсир этувчи моддаси: Polymer compounds [cite: 27]\n· Препаратив шакли: Сувда эрувчи гранулалар [cite: 27]" },
-            { id: "upolit", name: "UPOLIT®", text: "UPOLIT® 75% эм.к. [cite: 28]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектоакарицид [cite: 28]\n\n· Таъсир этувчи моддаси: Profenofos 650 g/l + Cypermethrin 100 g/l [cite: 28]\n· Препаратив шакли: Эмульсия концентрати [cite: 28]" },
-            { id: "uprokleym_fit", name: "UPROKLEYM FIT®", text: "UPROKLEYM FIT® 50% с.э.г. [cite: 29]\nИнсектицид ва акарицидлар билан қўллаш учун клей модда [cite: 29]\n\n· Таъсир этувчи моддаси: Polymer compounds [cite: 29]\n· Препаратив шакли: Сувда эрувчи гранулалар [cite: 29]" },
-            { id: "uspilan", name: "USPILAN®", text: "USPILAN® 20% н.кук. [cite: 30]\nЗарарли ҳашаротларга қарши юқори самарали системали инсектицид [cite: 30]\n\n· Таъсир этувчи моддаси: Acetamiprid 200 g/kg [cite: 30]\n· Препаратив шакли: Намланувчи кукун [cite: 30]" },
-            { id: "utastar", name: "UTASTAR®", text: "UTASTAR® 10% эм.к. [cite: 31]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектоакарицид [cite: 31]\n\n· Таъсир этувчи моддаси: Bifenthrin 100 g/l [cite: 31]\n· Препаратив шакли: Эмульсия концентрати [cite: 31]" },
-            { id: "uvertim_plus", name: "UVERTIM PLUS®", text: "UVERTIM PLUS® 18% эм.к. [cite: 32]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектоакарицид [cite: 32]\n\n· Таъсир этувчи моддаси: Abamektin 60 g/l + Spirodiclofen 120 g/l [cite: 32]\n· Препаратив шакли: Эмульсия концентрати [cite: 32]" },
-            { id: "yvertim", name: "YVERTIM®", text: "YVERTIM® 1,8% эм.к. [cite: 33]\nЗарарли ҳашаротларга қарши юқори самарали ихтисослашган инсектоакарицид [cite: 33]\n\n· Таъсир этувчи моддаси: Abamektin 18 g/l [cite: 33]\n· Препаратив шакли: Эмульсия концентрати [cite: 33]" }
-        ]
+        title: "ИНСЕКТИЦИДЛАР", 
+        path: "insecticides", 
+        items: [
+            { id: "akara_max", name: "AKARA MAX®", text: "Propargit 600 g/L + Geksitiazoks 60 g/l" },
+            // Сюда добавляй остальные через запятую
+        ] 
     },
-    herbicides: { 
-        title: "ГЕРБИЦИДЛАР", path: "herbicides", items: [
-            { id: "grans_max", name: "GRANS MAX®", text: "GRANS MAX® 80% с.э.г. [cite: 1]\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 1]\n\n· Таъсир этувчи моддаси: Tribenuron metil 600 g/kg + Florasulam 200 g/kg [cite: 1]\n· Препаратив шакли: Сувда эрувчи гранулалар [cite: 1]" },
-            { id: "indazil_chem", name: "INDAZIL CHEM®", text: "INDAZIL CHEM® 50% сус.к. [cite: 2]\nМевали боғ майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 2]\n\n· Таъсир этувчи моддаси: Indaziflam 500 g/l [cite: 2]\n· Препаратив шакли: Суспензия концентрати [cite: 2]" },
-            { id: "lancelo_chem", name: "LANCELO CHEM®", text: "LANCELO CHEM® 45% с.д.г. [cite: 3]\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 3]\n\n· Таъсир этувчи моддаси: Florasulam 150 g/kg + Aminopiralid 300 g/kg [cite: 3]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 3]" },
-            { id: "laudi_chem", name: "LAUDI CHEM®", text: "LAUDI CHEM® 30% с.д.г. [cite: 4]\nМаккажўхори майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 4]\n\n· Таъсир этувчи моддаси: Tembotrion 200 g/kg + Izoksadifen etil 100 g/kg [cite: 4]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 4]" },
-            { id: "pivochem", name: "PIVOCHEM®", text: "PIVOCHEM® 24% с.э.к. [cite: 5]\nСоя, ловия ва беда майдонларидаги бир ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 5]\n\n· Таъсир этувчи моддаси: Imazetapir 240 g/l [cite: 5]\n· Препаратив шакли: Сувда эрувчи концентрат [cite: 5]" },
-            { id: "suli_chem", name: "SULI CHEM®", text: "SULI CHEM® 70% с.д.г. [cite: 6]\nҒалла майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 6]\n\n· Таъсир этувчи моддаси: Flukarbazon natriy 700 g/kg [cite: 6]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 6]" },
-            { id: "uzellek", name: "UZELLEK®", text: "UZELLEK® 10,4% эм.к. [cite: 7]\nЭкинларда бир йиллик ва кўп йиллик бошоқли ва икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 7]\n\n· Таъсир этувчи моддаси: Haloxyfop-R-methyl 104 g/l [cite: 7]\n· Препаратив шакли: Эмульсия концентрати [cite: 7]" },
-            { id: "ugezart", name: "UGEZART®", text: "UGEZART® 50% сус.к. [cite: 8]\nСабзавот экинларида бир йиллик икки паллали ва бошоқли бегона ўтларга қарши юқори самарали гербицид [cite: 8]\n\n· Таъсир этувчи моддаси: Promethrin 500 g/l [cite: 8]\n· Препаратив шакли: Суспензия концентрати [cite: 8]" },
-            { id: "yastar", name: "YASTAR®", text: "YASTAR® 33% эм.к. [cite: 9]\nЭкинларда бир йиллик икки паллали ва бошоқли бегона ўтларга қарши юқори самарали гербицид [cite: 9]\n\n· Таъсир этувчи моддаси: Pendimethalin 330 g/l [cite: 9]\n· Препаратив шакли: Эмульсия концентрати [cite: 9]" },
-            { id: "ugotril", name: "UGOTRIL®", text: "UGOTRIL® 24% эм.к. [cite: 10]\nПиёз экилган ерларда бир йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 10]\n\n· Таъсир этувчи моддаси: Oxyfluorfen 240 g/l [cite: 10]\n· Препаратив шакли: Эмульсия концентрати [cite: 10]" },
-            { id: "uklin", name: "UKLIN®", text: "UKLIN® 3,5% м.д. [cite: 11]\nШолидаги бир йиллик ва кўп йиллик бошоқли, икки паллали ҳамда ботқоқ бегона ўтларга қарши гербицид [cite: 11]\n\n· Таъсир этувчи моддаси: Penoxsulam 35 g/l [cite: 11]\n· Препаратив шакли: Мойли дисперсия [cite: 11]" },
-            { id: "utopsho_plus", name: "UTOPSHO PLUS®", text: "UTOPSHO PLUS® 12,5% м.д. [cite: 12]\nШолидаги бир йиллик ва кўп йиллик бошоқли ва икки паллали ёввойи ўтларга қарши юқори самарали гербицид [cite: 12]\n\n· Таъсир этувчи моддаси: Cyhalofop-butyl 125 g/l [cite: 12]\n· Препаратив шакли: Мойли дисперсия [cite: 12]" },
-            { id: "tufon_super", name: "TUFON SUPER®", text: "TUFON SUPER® 75,7% с.д.г. [cite: 13]\nЭкин экиш режалаштирилган майдонлардаги бир йиллик ва кўп йиллик бошоқли ҳамда икки паллали бегона ўтларга қарши гербицид [cite: 13]\n\n· Таъсир этувчи моддаси: Glyphosate 75,7% [cite: 13]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 13]" },
-            { id: "bazagran_mspa", name: "BAZAGRAN MSPA®", text: "BAZAGRAN MSPA® 46% с.э. [cite: 14]\nШоли майдонларидаги бир йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 14]\n\n· Таъсир этувчи моддаси: Bentazone 400 g/l + MSPA 60 g/l [cite: 14]\n· Препаратив шакли: Сувли эритма [cite: 14]" },
-            { id: "glyphosate_50", name: "Glyphosate® 50%", text: "Glyphosate® 50% с.э. [cite: 15]\nБарча турдаги бир йиллик ва кўп йиллик бегона ўтларга қарши қўлланиладиган гербицид [cite: 15]\n\n· Таъсир этувчи моддаси: Glyphosate 500 g/l [cite: 15]\n· Препаратив шакли: Эмульсия концентрати [cite: 15]" },
-            { id: "renbou", name: "RENBOU®", text: "RENBOU® 3% эм.к. [cite: 16]\nШоли майдонларидаги бир ва кўп йиллик икки паллали бегона ўтларга қарши юқори самарали гербицид [cite: 16]\n\n· Таъсир этувчи моддаси: Penoxsulam 30 g/l [cite: 16]\n· Препаратив шакли: Эмульсия концентрати [cite: 16]" }
-        ]
-    },
-    fungicides: { 
-        title: "ФУНГИЦИДЛАР", path: "fungicides", items: [
-            { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "FOSETIL CHEM® 80% н.кук. [cite: 39]\nБактериал куйиш касалликларига қарши юқори самарали восита [cite: 39]\n\n· Таъсир этувчи моддаси: Fosetyl aluminium 800 g/kg [cite: 39]\n· Препаратив шакли: Намланувчи кукун [cite: 39]" },
-            { id: "panchem", name: "PANCHEM®", text: "PANCHEM® 40% эм.к. [cite: 40]\nКалмараз ва ун шудринг касалликларига қарши юқори самарали фунгицид [cite: 40]\n\n· Таъсир этувчи моддаси: Flusilazole 400 g/l [cite: 40]\n· Препаратив шакли: Эмульсия концентрати [cite: 40]" },
-            { id: "swichem", name: "SWICHEM®", text: "SWICHEM® 65% с.д.г. [cite: 41]\nОқ ва кулранг чириш касалликларига қарши юқори самарали фунгицид [cite: 41]\n\n· Таъсир этувчи моддаси: Cyprodinil + Fludioxonil [cite: 41]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 41]" },
-            { id: "udomil", name: "UDOMIL®", text: "UDOMIL® 68% с.д.г. [cite: 42]\nФитофтороз ва милдью касалликларига қарши юқори самарали фунгицид [cite: 42]\n\n· Таъсир этувчи моддаси: Mancozeb + Mefenoxam [cite: 42]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 42]" },
-            { id: "ukvadrio", name: "UKVADRIO®", text: "UKVADRIO® 25% сус.к. [cite: 43]\nМилдью ва пероноспороз касалликларига қарши юқори самарали фунгицид [cite: 43]\n\n· Таъсир этувчи моддаси: Azoxystrobin 250 g/l [cite: 43]\n· Препаратив шакли: Суспензия концентрати [cite: 43]" },
-            { id: "upaz", name: "UPAZ®", text: "UPAZ® 10% эм.к. [cite: 44]\nОидиум ва милдью касалликларига қарши юқори самарали фунгицид [cite: 44]\n\n· Таъсир этувчи моддаси: Penconazole 100 g/l [cite: 44]\n· Препаратив шакли: Эмульсия концентрати [cite: 44]" },
-            { id: "uskor", name: "USKOR®", text: "USKOR® 25% эм.к. [cite: 45]\nМева чириш ва доғланиш касалликларига қарши юқори самарали фунгицид [cite: 45]\n\n· Таъсир этувчи моддаси: Difenoconazole 250 g/l [cite: 45]\n· Препаратив шакли: Эмульсия концентрати [cite: 45]" },
-            { id: "ustrobi", name: "USTROBI®", text: "USTROBI® 50% с.д.г. [cite: 46]\nКалмараз, оидиум ва антракноз касалликларига қарши юқори самарали фунгицид [cite: 46]\n\n· Таъсир этувчи моддаси: Kresoxim-methyl 500 g/kg [cite: 46]\n· Препаратив шакли: Сувда дисперсияланувчи гранулалар [cite: 46]" },
-            { id: "xom_chem", name: "XOM CHEM®", text: "XOM CHEM® 85% н.кук. [cite: 47]\nАнтракноз ва ун шудринг касалликларига қарши юқори самарали фунгицид [cite: 47]\n\n· Таъсир этувчи моддаси: Copper oxychloride 850 g/kg [cite: 47]\n· Препаратив шакли: Намланувчи кукун [cite: 47]" }
-        ]
-    },
-    regulators: { 
-        title: "РЕГУЛЯТОРЛАР", path: "regulators", items: [
-            { id: "benefit_pz", name: "BENEFIT PZ®", text: "BENEFIT PZ® [cite: 34]\nМевалар ҳосилини йириклаштиради ва бир хил (стандарт) етилишини таъминлайди [cite: 34]\n\n· Таркиби: N-3%; C-10% нуклеотидлар; витаминлар; аминокислоталар [cite: 34, 35]\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари [cite: 35]\n· Қўллаш усули: Япроқ орқали озиқлантирилади [cite: 35]" },
-            { id: "boroplus", name: "BOROPLUS®", text: "BOROPLUS® [cite: 35]\nБор (B) моддаси етишмаслигини бартараф этиш учун мўлжалланган восита [cite: 35]\n\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари [cite: 35]\n· Қўллаш усули: Япроқ орқали ҳамда илдиз орқали озиқлантириш тавсия этилади [cite: 35]" },
-            { id: "brexil_line", name: "BREXIL LINE®", text: "BREXIL LINE® [cite: 35]\nЭкинларни мезо ва микроэлементларга бўлган эҳтиёжини тўлиқ қондиради [cite: 35]\n\n· Таркиби: Мезо ва микроэлементлар [cite: 35]\n· Экин тури: Барча турдаги мевали дарахтлар, сабзавотлар ва полиз экинлари [cite: 35]\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади [cite: 35]" },
-            { id: "calbit_c", name: "CALBIT C®", text: "CALBIT C® [cite: 35]\nКальций етишмаслиги сабабли келиб чиқадиган касалликларни олдини олувчи суюқ минерал озуқа [cite: 35]\n\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари [cite: 35]\n· Қўллаш усули: Япроқ ва илдиз орқали озиқлантирилади [cite: 35, 36]" },
-            { id: "control_dmp", name: "CONTROL DMP®", text: "CONTROL DMP® [cite: 36]\npH ни мувозанатловчи, сирт фаол хусусиятга эга бўлган восита [cite: 36]\n\n· Таркиби: Умумий азот (N) – 3%, фосфор ангидрид (P₂O₅) – 17% [cite: 36]\n· Экин тури: Барча экин турларида [cite: 36]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 36]" },
-            { id: "master", name: "MASTER®", text: "MASTER® [cite: 36]\nМакро (NPK) ва хелат шаклдаги микроэлементли озуқа [cite: 36]\n\n· Таркиби: NPK + микроэлементлар (EDTA) [cite: 36]\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари [cite: 36]\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади [cite: 36]" },
-            { id: "viva", name: "VIVA®", text: "VIVA® [cite: 36]\nИлдиз тизимини ривожлантирувчи ҳамда ўсимлик ўсишини фаоллаштирувчи биологик фаол восита [cite: 36]\n\n· Экин тури: Барча турдаги экинлар [cite: 36]\n· Қўллаш усули: Илдиз орқали қўлланилади [cite: 36]" },
-            { id: "yield_on", name: "YIELD ON®", text: "YIELD ON® [cite: 36]\nҲосилдорликни оширишга хизмат қилувчи биологик фаол восита [cite: 36]\n\n· Экин тури: Барча турдаги қишлоқ хўжалиги экинлари [cite: 36]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 36]" },
-            { id: "radifarm", name: "RADIFARM®", text: "RADIFARM® [cite: 36]\nИлдиз тизимини кучайтирувчи ҳамда стресс ҳолатлардан чиқаришга ёрдам берувчи восита [cite: 36, 37]\n\n· Экин тури: Барча турдаги экинлар [cite: 37]\n· Қўллаш усули: Илдиз орқали қўлланилади [cite: 37]" },
-            { id: "sweet", name: "SWEET®", text: "SWEET® [cite: 37]\nМеваларнинг шаклланиши ва сифатли етилишини таъминловчи биологик фаол восита [cite: 37]\n\n· Экин тури: Мевали дарахтлар ва сабзавотлар [cite: 37]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 37]" },
-            { id: "megafol", name: "MEGAFOL®", text: "MEGAFOL® [cite: 37]\nСтресс ҳолатларда ҳимоя қилувчи ҳамда тикловчи биологик фаол восита [cite: 37]\n\n· Таркиби: N-3%, K₂O-8%, C-9% [cite: 37]\n· Экин тури: Барча турдаги экинлар [cite: 37]\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади [cite: 37]" },
-            { id: "plantafol", name: "PLANTAFOL®", text: "PLANTAFOL® [cite: 37]\nМакро ва микроэлементларга бой комплекс озуқа воситаси [cite: 37]\n\n· Экин тури: Барча турдаги экинлар [cite: 37]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 37]" },
-            { id: "mc_extra", name: "MC EXTRA®", text: "MC EXTRA® [cite: 37]\nЎсимлик ўсишини фаоллаштирувчи ҳамда ҳосилдорликни оширишга қаратилган восита [cite: 37]\n\n· Экин тури: Барча турдаги экинлар [cite: 37]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 37]" },
-            { id: "mc_set", name: "MC SET®", text: "MC SET® [cite: 37]\nГуллаш, чангланиш ва мева тугиш жараёнини яхшилашга кўмаклашувчи фитогармон [cite: 37]\n\n· Таркиби: Бор (B) ва Рух (Zn) [cite: 38]\n· Экин тури: Барча турдаги экинлар [cite: 38]\n· Қўллаш усули: Япроқ орқали қўллаш тавсия этилади [cite: 38]" },
-            { id: "mc_cream", name: "MC CREAM®", text: "MC CREAM® [cite: 38]\nФизиологик фаолликни оширувчи ҳамда ривожланишини яхшиловчи восита [cite: 38]\n\n· Экин тури: Барча турдаги экинлар [cite: 38]\n· Қўллаш усули: Япроқ орқали қўлланилади [cite: 38]" }
-        ]
-    },
-    defoliants: { 
-        title: "ДЕФОЛИАНТ", path: "defoliants", items: [
-            { id: "udropp", name: "UDROPP®", text: "UDROPP® 54% м.сус.к. [cite: 17]\nҒўза ҳосилини тез етилиши ва баргларни тўкиш учун қўлланиладиган дефолиант [cite: 17]\n\n· Таъсир этувчи моддаси: Thidiazuron 360 g/l + Diuron 180 g/l [cite: 17]\n· Препаратив шакли: Мойли суспензия концентрати [cite: 17]" }
-        ]
-    }
+    herbicides: { title: "ГЕРБИЦИДЛАР", path: "herbicides", items: [] },
+    fungicides: { title: "ФУНГИЦИДЛАР", path: "fungicides", items: [] },
+    regulators: { title: "РЕГУЛЯТОРЛАР", path: "regulators", items: [] },
+    defoliants: { title: "ДЕФОЛИАНТ", path: "defoliants", items: [] }
 };
 
 const CONTACTS = [
-    { region: "Бош агроном", people: [{ name: "Равшанбек Каримов", tel: "+998773017080" }] },
-    { region: "Тошкент вилояти", people: [{ name: "Джураев Бекзод", tel: "+998773017060" }] },
-    { region: "Қорақалпоғистон, Бухоро, Навоий, Хоразм", people: [{ name: "Саидов Истам", tel: "+998773017040" }, { name: "Ботиров Бобирхўжа", tel: "+998773017020" }] },
-    { region: "Қашқадарё, Сурхондарё", people: [{ name: "Яҳёев Жўрабек", tel: "+998773017090" }, { name: "Махамадхужаев Р.", tel: "+998774037010" }] },
-    { region: "Сирдарё, Жиззах, Самарқанд", people: [{ name: "Тиллаев Дилмурод", tel: "+998773017050" }, { name: "Джураев Бекзод", tel: "+998773017060" }] },
-    { region: "Андижон, Наманган, Фарғона", people: [{ name: "Усвалиев Ойбек", tel: "+998773017030" }, { name: "Хакимов Хожиакбар", tel: "+998773017010" }] }
+    { r: "Бош агроном", p: [{ n: "Равшанбек Каримов", t: "+998773017080" }] },
+    { r: "Тошкент вилояти", p: [{ n: "Джураев Бекзод", t: "+998773017060" }] }
 ];
 
-function setAppColor(color) {
-    document.documentElement.style.setProperty('--current-color', color);
-    if (tg.setHeaderColor) tg.setHeaderColor(color);
-}
-
 function showHome() {
-    setAppColor(COLORS.main);
-    let html = `
-        <div class="main-menu">
-            <div class="cat-btn bg-her" onclick="showList('herbicides')">🌿 ГЕРБИЦИДЛАР</div>
-            <div class="cat-btn bg-ins" onclick="showList('insecticides')">🐜 ИНСЕКТИЦИДЛАР</div>
-            <div class="cat-btn bg-fun" onclick="showList('fungicides')">🍄 ФУНГИЦИДЛАР</div>
-            <div class="cat-btn bg-reg" onclick="showList('regulators')">🧪 РЕГУЛЯТОРЛАР</div>
-            <div class="cat-btn bg-def" onclick="showList('defoliants')" style="grid-column: span 2;">🍂 ДЕФОЛИАНТЛАР</div>
-        </div>
-        <div style="padding:15px; font-weight:bold; color:#444;">📞 АЛОҚА ВА МАСЛАҲАТ:</div>
-    `;
+    let html = `<div class="main-menu">
+        <div class="cat-btn bg-her" onclick="showList('herbicides')">🌿 ГЕРБИЦИДЛАР</div>
+        <div class="cat-btn bg-ins" onclick="showList('insecticides')">🐜 ИНСЕКТИЦИДЛАР</div>
+        <div class="cat-btn bg-fun" onclick="showList('fungicides')">🍄 ФУНГИЦИДЛАР</div>
+        <div class="cat-btn bg-reg" onclick="showList('regulators')">🧪 РЕГУЛЯТОРЛАР</div>
+        <div class="cat-btn bg-def" onclick="showList('defoliants')" style="grid-column: span 2;">🍂 ДЕФОЛИАНТЛАР</div>
+    </div>`;
+    
     CONTACTS.forEach(c => {
         html += `<div class="contact-card">
-            <span class="region-name">${c.region}</span>
-            ${c.people.map(p => `
+            <span class="region-name">${c.r}</span>
+            ${c.p.map(person => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-                    <span style="font-size:13px; color:#555;">${p.name}</span>
-                    <div class="call-btn" onclick="callPhone('${p.tel}')">Қўнғироқ</div>
+                    <span style="font-size:12px;">${person.n}</span>
+                    <div class="call-btn" onclick="makeCall('${person.t}')">Қўнғироқ</div>
                 </div>
             `).join('')}
         </div>`;
     });
     document.getElementById('app').innerHTML = html;
+    window.scrollTo(0,0);
 }
 
 function showList(key) {
     const cat = DATA[key];
-    setAppColor(COLORS[key]);
-    let html = `<div class="inner-page">
-        <div style="text-align:center; padding:12px; font-weight:bold; color:white; background:rgba(0,0,0,0.15);">${cat.title}</div>
-        <div class="prod-grid">`;
+    let html = `<div style="padding:15px; font-weight:bold; text-align:center; color:var(--main);">${cat.title}</div>
+    <div class="prod-grid">`;
     cat.items.forEach(item => {
         html += `<div class="item-card" onclick="showDetail('${key}', '${item.id}')">${item.name}</div>`;
     });
-    html += `</div><div class="nav-btn" onclick="showHome()">⬅ БОШ МЕНЮГА</div></div>`;
+    html += `</div><div class="nav-btn" onclick="showHome()">⬅ БОШ МЕНЮ</div>`;
     document.getElementById('app').innerHTML = html;
     window.scrollTo(0,0);
 }
 
 function showDetail(key, id) {
     const item = DATA[key].items.find(i => i.id === id);
-    let html = `
-        <div class="details">
-            <div class="card">
-                <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
-                <img src="images/${DATA[key].path}/${id}/product.png" class="product-img" onerror="this.src='images/no-image.png'">
-            </div>
-            <div class="info-text">${item.text}</div>
-            <div class="card">
-                <h3>🔍 БАТАФСИЛ</h3>
-                <img src="images/${DATA[key].path}/${id}/pest.jpg" onerror="this.src='images/no-image.png'">
-            </div>
-            <div class="nav-btn" onclick="showList('${key}')">⬅ РЎЙХАТГА ҚАЙТИШ</div>
+    const prodImg = `images/${DATA[key].path}/${id}/product.png`;
+    const pestImg = `images/${DATA[key].path}/${id}/pest.jpg`;
+    
+    document.getElementById('app').innerHTML = `
+        <div class="card">
+            <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
+            <img src="${prodImg}" onerror="this.src='images/no-image.png'">
         </div>
+        <div class="info-box"><b>${item.name}</b>\n\n${item.text}</div>
+        <div class="card" onclick="openZoom('${pestImg}')">
+            <h3>🔍 БАТАФСИЛ (БОСИНГ)</h3>
+            <img src="${pestImg}" onerror="this.src='images/no-image.png'">
+        </div>
+        <div class="nav-btn" onclick="showList('${key}')">⬅ ОРҚАГА</div>
     `;
-    document.getElementById('app').innerHTML = html;
     window.scrollTo(0,0);
 }
 
