@@ -80,10 +80,19 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 function zoomImage(url) {
-    if (tg.showImageUrl) { tg.showImageUrl(url); } 
-    else { window.open(url, '_blank'); }
+    // Сначала пробуем самый крутой метод Telegram — встроенную галерею
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openPhoto) {
+        window.Telegram.WebApp.openPhoto(url);
+    } 
+    // Если не сработало, пробуем метод открытия ссылок, который ты предложил
+    else if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
+        window.Telegram.WebApp.openLink(url);
+    } 
+    // Если открыто просто в браузере — открываем в новой вкладке
+    else {
+        window.open(url, '_blank');
+    }
 }
-
 const DATA = {
     insecticides: { 
         title: "ИНСЕКТИЦИДЛАР", 
