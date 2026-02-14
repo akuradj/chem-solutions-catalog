@@ -20,7 +20,7 @@
     header div { font-size: 18px; font-weight: bold; }
     
     .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-    .cat-btn { color: #fff; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .cat-btn { color: #fff; border-radius: 15px; padding: 25px 10px; text-align: center; cursor: pointer; font-weight: bold; font-size: 13px; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0,0,0,0.15); border:none; }
     
     .bg-her { background: var(--herbicide); }
     .bg-ins { background: var(--insecticide); }
@@ -36,24 +36,16 @@
     
     .info-text { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid var(--current-color); line-height: 1.6; font-size: 14px; white-space: pre-line; color: #333; }
     
-    .call-btn { 
-        display: inline-block; 
-        background: #00796b; 
-        color: #fff; 
-        padding: 8px 15px; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        font-weight: bold; 
-        font-size: 13px;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .call-btn:active { opacity: 0.7; }
-
+    .call-btn { background: #00796b; color: #fff; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; text-align:center; }
     .nav-btn { background: #333; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 15px; cursor: pointer; font-weight: bold; }
+    
     img { width: 100%; display: block; }
     .product-img { max-width: 75%; margin: 0 auto; padding: 10px; object-fit: contain; }
     .card { background: #fff; border-radius: 15px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #eee; }
     .card h3 { margin: 0; padding: 12px; background: #f8f9fa; color: var(--current-color); text-align: center; font-size: 14px; }
+
+    #zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; }
+    #zoom-overlay img { max-width: 95%; max-height: 90%; object-fit: contain; }
 </style>
 </head>
 <body>
@@ -65,19 +57,13 @@
 
 <div id="app"></div>
 
+<div id="zoom-overlay" onclick="this.style.display='none'">
+    <img id="zoomed-img" src="">
+</div>
+
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
-
-// Твоя функция звонка
-function callPhone(phone) {
-    const cleanPhone = phone.replace(/\s+/g, '');
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-        Telegram.WebApp.openLink("tel:" + cleanPhone);
-    } else {
-        window.location.href = "tel:" + cleanPhone;
-    }
-}
 
 const COLORS = {
     main: "#00796b",
@@ -167,19 +153,32 @@ const DATA = {
         ]
     }
 };
-
 const CONTACTS = [
     { region: "Бош агроном", people: [{ name: "Равшанбек Каримов", tel: "+998773017080" }] },
     { region: "Тошкент вилояти", people: [{ name: "Джураев Бекзод", tel: "+998773017060" }] },
-    { region: "Қорақалпоғистон, Бухоро, Навоий, Хоразм", people: [{ name: "Саидов Истам", tel: "+998773017040" }, { name: "Ботиров Бобирхўжа", tel: "+998773017020" }] },
-    { region: "Қашқадарё, Сурхондарё", people: [{ name: "Яҳёев Жўрабек", tel: "+998773017090" }, { name: "Махамадхужаев Р.", tel: "+998774037010" }] },
-    { region: "Сирдарё, Жиззах, Самарқанд", people: [{ name: "Тиллаев Дилмурод", tel: "+998773017050" }, { name: "Джураев Бекзод", tel: "+998773017060" }] },
-    { region: "Андижон, Наманган, Фарғона", people: [{ name: "Усвалиев Ойбек", tel: "+998773017030" }, { name: "Хакимов Хожиакбар", tel: "+998773017010" }] }
+    { region: "Водий вилоятлари", people: [{ name: "Усвалиев Ойбек", tel: "+998773017030" }] }
 ];
 
 function setAppColor(color) {
     document.documentElement.style.setProperty('--current-color', color);
-    if (tg.setHeaderColor) tg.setHeaderColor(color);
+}
+
+function makeCall(name, phone) {
+    const cleanPhone = phone.replace(/[^\d+]/g, '');
+    const storage = document.createElement('textarea');
+    storage.value = cleanPhone;
+    document.body.appendChild(storage);
+    storage.select();
+    document.execCommand('copy');
+    document.body.removeChild(storage);
+
+    tg.showAlert("👤 " + name + "\n📞 " + phone + "\n\nРақам нусхаланди! Энди уни телефон қилиш жойига 'Вставить' қилишингиз мумкин.");
+    tg.openLink("tel:" + cleanPhone);
+}
+
+function openZoom(src) {
+    document.getElementById('zoomed-img').src = src;
+    document.getElementById('zoom-overlay').style.display = 'flex';
 }
 
 function showHome() {
@@ -200,7 +199,7 @@ function showHome() {
             ${c.people.map(p => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
                     <span style="font-size:13px; color:#555;">${p.name}</span>
-                    <div class="call-btn" onclick="callPhone('${p.tel}')">Қўнғироқ</div>
+                    <div class="call-btn" onclick="makeCall('${p.name}', '${p.tel}')">Қўнғироқ</div>
                 </div>
             `).join('')}
         </div>`;
@@ -224,16 +223,19 @@ function showList(key) {
 
 function showDetail(key, id) {
     const item = DATA[key].items.find(i => i.id === id);
+    const imgPath1 = `images/${DATA[key].path}/${id}/product.png`;
+    const imgPath2 = `images/${DATA[key].path}/${id}/pest.jpg`;
+    
     let html = `
-        <div class="details">
+        <div class="details" style="padding:10px;">
             <div class="card">
                 <h3>📦 ПРЕПАРАТ КЎРИНИШИ</h3>
-                <img src="images/${DATA[key].path}/${id}/product.png" class="product-img" onerror="this.src='images/no-image.png'">
+                <img src="${imgPath1}" class="product-img" onerror="this.src='images/no-image.png'">
             </div>
             <div class="info-text">${item.text}</div>
-            <div class="card">
-                <h3>🔍 БАТАФСИЛ</h3>
-                <img src="images/${DATA[key].path}/${id}/pest.jpg" onerror="this.src='images/no-image.png'">
+            <div class="card" onclick="openZoom('${imgPath2}')">
+                <h3>🔍 БАТАФСИЛ (БОСИНГ)</h3>
+                <img src="${imgPath2}" onerror="this.src='images/no-image.png'">
             </div>
             <div class="nav-btn" onclick="showList('${key}')">⬅ РЎЙХАТГА ҚАЙТИШ</div>
         </div>
