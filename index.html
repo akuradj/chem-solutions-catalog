@@ -1,127 +1,226 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Catalog</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { margin: 0; font-family: -apple-system, sans-serif; background: #f4f7f9; color: #222; }
-        header { background: #00796b; color: #fff; padding: 15px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        .cat-btn { background: #00796b; color: white; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; border: none; text-transform: uppercase; }
-        .product-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .prod-btn { background: #fff; border-radius: 8px; padding: 12px 5px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .details { padding: 10px; animation: fadeIn 0.3s ease; }
-        .card { background: #fff; border-radius: 15px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .card h3 { font-size: 16px; text-align: center; padding: 12px; margin: 0; background: #e0f2f1; color: #00796b; }
-        img { width: 100%; height: auto; display: block; background: #f9f9f9; }
-        .info-text { background: #fff; padding: 15px; border-radius: 12px; margin: 15px 0; border-left: 5px solid #00796b; line-height: 1.5; }
-        .nav-btn { background: #455a64; color: #fff; padding: 16px; text-align: center; border-radius: 12px; margin: 15px; cursor: pointer; font-weight: bold; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Chemical Solutions Catalog</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body { margin:0; font-family:-apple-system, sans-serif; background:#f4f7f9; color:#222; }
+header { background:#00796b; color:#fff; padding:15px; text-align:center; font-weight:bold; position:sticky; top:0; z-index:1000; }
+.main-menu { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:15px; }
+.cat-btn { background:#00796b; color:#fff; border-radius:12px; padding:20px 10px; text-align:center; cursor:pointer; font-weight:bold; }
+.product-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:15px; }
+.prod-btn { background:#fff; border-radius:10px; padding:12px 6px; text-align:center; cursor:pointer; border:1px solid #ddd; font-weight:600; }
+.details { padding:10px; }
+.card { background:#fff; border-radius:15px; margin-bottom:15px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,.1); }
+.card h3 { margin:0; padding:12px; background:#e0f2f1; text-align:center; color:#00796b; }
+img { width:100%; display:block; }
+.info-text { background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border-left:5px solid #00796b; white-space:pre-line; }
+.nav-btn { background:#455a64; color:#fff; padding:16px; text-align:center; border-radius:12px; margin:15px; cursor:pointer; font-weight:bold; }
+</style>
 </head>
+
 <body>
-    <header id="h-text">CHEMICAL SOLUTIONS</header>
-    <div id="view"></div>
+<header id="header">CHEMICAL SOLUTIONS</header>
+<div id="app"></div>
 
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
 
 const DATA = {
-    insecticides: {
-        title: "ИНСЕКТИЦИДЛАР",
-        path: "insecticides",
-        items: [
-            { id: "akara_max", name: "AKARA MAX®" },
-            { id: "komfidor_profi", name: "KOMFIDOR PROFI®" },
-            { id: "mospi_chem", name: "MOSPI CHEM®" },
-            { id: "mospi_max", name: "MOSPI MAX®" },
-            { id: "pirido_chem", name: "PIRIDO CHEM®" },
-            { id: "tepek_chem", name: "TEPEK CHEM®" },
-            { id: "ucefat", name: "UCEFAT®" },
-            { id: "udonis", name: "UDONIS®" },
-            { id: "ukarat_forte0", name: "UKARAT FORTE®" },
-            { id: "ukleym", name: "UKLEYM®" },
-            { id: "upolit", name: "UPOLIT®" },
-            { id: "uprokleym_fit_500", name: "UPROKLEYM FIT®" },
-            { id: "uspilan", name: "USPILAN®" },
-            { id: "utastar", name: "UTASTAR®" },
-            { id: "uvertim_plus", name: "UVERTIM PLUS®" },
-            { id: "yvertim", name: "YVERTIM®" }
-        ]
-    },
-    fungicides: {
-        title: "ФУНГИЦИДЛАР",
-        path: "fungicides",
-        items: [
-            { id: "fosetil_chem", name: "FOSETIL CHEM®", text: "Кенг таъсир доирасига эга системали фунгицид." },
-            { id: "panchem", name: "PANCHEM®", text: "Контакт ва системали таъсирга эга фунгицид." },
-            { id: "swichem", name: "SWICHEM®", text: "Янги авлод фунгициди." },
-            { id: "udomil", name: "UDOMIL®", text: "Тез таъсир қилувчи фунгицид." },
-            { id: "ukvadrio", name: "UKVADRIO®", text: "Кенг спектрли системали фунгицид." },
-            { id: "upaz", name: "UPAZ®", text: "Контакт фунгицид." },
-            { id: "uskor", name: "USKOR®", text: "Системали фунгицид." },
-            { id: "ustrobi", name: "USTROBI®", text: "Стробилурин гуруҳига мансуб фунгицид." },
-            { id: "xom_chem", name: "XOM CHEM®", text: "Мис асосидаги контакт фунгицид." }
-        ]
-    }
+
+insecticides: {
+title:"ИНСЕКТИЦИДЛАР",
+path:"insecticides",
+items:[
+{ id:"akara_max", name:"AKARA MAX®", text:`AKARA MAX® 66% эм.к.
+Зарарли каналарга қарши юқори
+самарали ихтисослашган акарицид
+
+· Таъсир этувчи моддаси: Propargit 600 g/L
++ Geksitiazoks 60 g/l
+· Препаратив шакли: Эмульсия концентрати`},
+
+{ id:"komfidor_profi", name:"KOMFIDOR PROFI®", text:`KOMFIDOR PROFI® 20% с.э.к.
+Зарарли ҳашаротларга қарши юқори
+самарали системали инсектицид
+
+· Таъсир этувчи моддаси: Imidacloprid 200 g/l
+· Препаратив шакли: Сувда эрувчи концентрат`},
+
+{ id:"mospi_chem", name:"MOSPI CHEM®", text:`MOSPI CHEM® 20% н.кук.
+Зарарли ҳашаротларга қарши юқори
+самарали ихтисослашган инсектицид
+
+· Таъсир этувчи моддаси: Acetamiprid 200 g/kg
+· Препаратив шакли: Намланувчи кукун`},
+
+{ id:"mospi_max", name:"MOSPI MAX®", text:`MOSPI MAX® 35% с.д.г.
+Зарарли ҳашаротларга қарши юқори
+самарали ихтисослашган инсектицид
+
+· Таъсир этувчи моддаси: Acetamiprid 150 g/kg
++ Flonicamid 200 g/kg
+· Препаратив шакли: Сувда дисперсияланувчи гранулалар`},
+
+{ id:"pirido_chem", name:"PIRIDO CHEM®", text:`PIRIDO CHEM® 20% н.кук.
+Зарарли каналарга тизимли таъсир қилувчи
+ихтисослашган акарицид
+
+· Таъсир этувчи моддаси: Piridaben 200 g/kg
+· Препаратив шакли: Намланувчи кукун`},
+
+{ id:"tepek_chem", name:"TEPEK CHEM®", text:`TEPEK CHEM® 50% с.д.г.
+Зараркунанда ҳашаротларга қарши
+юқори самарали ихтисослашган инсектицид
+
+· Таъсир этувчи моддаси: Flonicamid 500 g/kg
+· Препаратив шакли: Сувда дисперсияланувчи гранулалар`},
+
+{ id:"ucefat", name:"UCEFAT®", text:`UCEFAT® 75% э.кук.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектицид
+
+· Таъсир этувчи моддаси: Acephate 750 g/kg
+· Препаратив шакли: Эрувчи кукун`},
+
+{ id:"udonis", name:"UDONIS®", text:`UDONIS® 5% с.к.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектоакарицид
+
+· Таъсир этувчи моддаси: Fipronil 50 g/l
+· Препаратив шакли: Суспензия концентрати`},
+
+{ id:"ukarat_forte", name:"UKARAT FORTE®", text:`UKARAT FORTE® 5% эм.к.
+Зарарли ҳашаротлар ва каналарга қарши
+самараси исботланган инсектоакарицид
+
+· Таъсир этувчи моддаси: Lambda-cyhalothrin 50 g/l
+· Препаратив шакли: Эмульсия концентрати`},
+
+{ id:"ukleym", name:"UKLEYM®", text:`UKLEYM® 5% с.э.г.
+Инсектицид ва акарицидларнинг
+таъсирини кучайтирувчи ёрдамчи модда
+
+· Таъсир этувчи моддаси: Polymer compounds
+· Препаратив шакли: Сувда эрувчи гранулалар`},
+
+{ id:"upolit", name:"UPOLIT®", text:`UPOLIT® 75% эм.к.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектоакарицид
+
+· Таъсир этувчи моддаси: Profenofos 650 g/l
++ Cypermethrin 100 g/l
+· Препаратив шакли: Эмульсия концентрати`},
+
+{ id:"uprokleym_fit", name:"UPROKLEYM FIT®", text:`UPROKLEYM FIT® 50% с.э.г.
+Инсектицид ва акарицидлар билан
+қўллаш учун клей модда
+
+· Таъсир этувчи моддаси: Polymer compounds
+· Препаратив шакли: Сувда эрувчи гранулалар`},
+
+{ id:"uspilan", name:"USPILAN®", text:`USPILAN® 20% н.кук.
+Зарарли ҳашаротларга қарши юқори
+самарали системали инсектицид
+
+· Таъсир этувчи моддаси: Acetamiprid 200 g/kg
+· Препаратив шакли: Намланувчи кукун`},
+
+{ id:"utastar", name:"UTASTAR®", text:`UTASTAR® 10% эм.к.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектоакарицид
+
+· Таъсир этувчи моддаси: Bifenthrin 100 g/l
+· Препаратив шакли: Эмульсия концентрати`},
+
+{ id:"uvertim_plus", name:"UVERTIM PLUS®", text:`UVERTIM PLUS® 18% эм.к.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектоакарицид
+
+· Таъсир этувчи моддаси: Abamektin 60 g/l
++ Spirodiclofen 120 g/l
+· Препаратив шакли: Эмульсия концентрати`},
+
+{ id:"yvertim", name:"YVERTIM®", text:`YVERTIM® 1,8% эм.к.
+Зарарли ҳашаротларга қарши юқори
+самарали инсектоакарицид
+
+· Таъсир этувчи моддаси: Abamektin 18 g/l
+· Препаратив шакли: Эмульсия концентрати`}
+]
+},
+
+fungicides:{ title:"ФУНГИЦИДЛАР", path:"fungicides", items:[
+{ id:"fosetil_chem", name:"FOSETIL CHEM®" },
+{ id:"panchem", name:"PANCHEM®" },
+{ id:"swichem", name:"SWICHEM®" },
+{ id:"udomil", name:"UDOMIL®" },
+{ id:"ukvadrio", name:"UKVADRIO®" },
+{ id:"upaz", name:"UPAZ®" },
+{ id:"uskor", name:"USKOR®" },
+{ id:"ustrobi", name:"USTROBI®" },
+{ id:"xom_chem", name:"XOM CHEM®" }
+]},
+
+herbicides:{ title:"ГЕРБИЦИДЛАР", path:"herbicides", items:[
+"grans_max","indazil_chem","lancelo_chem","laudi_chem","pivochem","suli_chem","uzellek","ugezart","yastar","ugotril","uklin","utopsho_plus","tufon_super","bazagran_mspa","glyphosate_50","renbou","topik_premium"
+].map(id=>({id,name:id.replace(/_/g," ").toUpperCase()+"®"}))},
+
+regulators:{ title:"РЕГУЛЯТОРЛАР", path:"regulators", items:[
+"benefit_pz","boroplus","brexil_line","calbit_c","control_dmp","master","viva","yield_on","radifarm","sweet","megafol","plantafol","mc_extra","mc_set","mc_cream"
+].map(id=>({id,name:id.replace(/_/g," ").toUpperCase()+"®"}))},
+
+defoliants:{ title:"ДЕФОЛИАНТ", path:"defoliants", items:[
+{ id:"udropp", name:"UDROPP®", text:`UDROPP® 54% м.сус.к.
+Ғўза ҳосилини тез етилиши ва
+теримдан аввал баргларни тўкиш
+учун қўлланиладиган дефолиант
+
+· Таъсир этувчи моддаси: Thidiazuron 360 g/l
++ Diuron 180 g/l
+· Препаратив шакли: Мойли суспензия концентрати`}
+]}
 };
 
-const view = document.getElementById("view");
-const header = document.getElementById("h-text");
+const app=document.getElementById("app");
+const header=document.getElementById("header");
 
-function showHome() {
-    header.innerText = "CHEMICAL SOLUTIONS";
-    view.innerHTML = `
-        <div class="main-menu">
-            <div class="cat-btn" onclick="showList('insecticides')">Инсектицидлар</div>
-            <div class="cat-btn" onclick="showList('fungicides')">Фунгицидлар</div>
-        </div>
-    `;
-    window.scrollTo(0,0);
+function home(){
+header.innerText="CHEMICAL SOLUTIONS";
+app.innerHTML=`<div class="main-menu">
+<div class="cat-btn" onclick="list('insecticides')">Инсектицидлар</div>
+<div class="cat-btn" onclick="list('fungicides')">Фунгицидлар</div>
+<div class="cat-btn" onclick="list('herbicides')">Гербицидлар</div>
+<div class="cat-btn" onclick="list('regulators')">Регуляторлар</div>
+<div class="cat-btn" onclick="list('defoliants')">Дефолиант</div>
+</div>`;
 }
 
-function showList(key) {
-    const category = DATA[key];
-    header.innerText = category.title;
-    let html = '<div class="product-list">';
-    category.items.forEach(item => {
-        html += `<div class="prod-btn" onclick="showDetail('${key}', '${item.id}')">${item.name}</div>`;
-    });
-    html += '</div><div class="nav-btn" onclick="showHome()">⬅ ОРҚАГА</div>';
-    view.innerHTML = html;
-    window.scrollTo(0,0);
+function list(key){
+const c=DATA[key];
+header.innerText=c.title;
+app.innerHTML=`<div class="product-list">${
+c.items.map(p=>`<div class="prod-btn" onclick="detail('${key}','${p.id}')">${p.name}</div>`).join("")
+}</div><div class="nav-btn" onclick="home()">⬅ ОРҚАГА</div>`;
 }
 
-function showDetail(catKey, prodId) {
-    const category = DATA[catKey];
-    const product = category.items.find(i => i.id === prodId);
-    header.innerText = product.name;
-    const desc = product.text || "Замонавий юқори самарали восита.";
-    
-    // Путь к картинке: images/название_категории/название_товара/product.png
-    const imgPath = `images/${category.path}/${product.id}`;
-
-    view.innerHTML = `
-        <div class="details">
-            <div class="card">
-                <h3>Препарат</h3>
-                <img src="${imgPath}/product.png" onerror="this.src='https://placehold.co/400x500?text=Rasm+Mavjud+Emas'">
-            </div>
-            <div class="info-text">${desc}</div>
-            <div class="card">
-                <h3>Маълумот</h3>
-                <img src="${imgPath}/pest.jpg" onerror="this.src='https://placehold.co/400x500?text=Rasm+Mavjud+Emas'">
-            </div>
-        </div>
-        <div class="nav-btn" onclick="showList('${catKey}')">⬅ ОРҚАГА</div>
-    `;
-    window.scrollTo(0,0);
+function detail(k,id){
+const c=DATA[k];
+const p=c.items.find(x=>x.id===id);
+header.innerText=p.name;
+const base=`images/${c.path}/${p.id}`;
+app.innerHTML=`<div class="details">
+<div class="card"><h3>Препарат</h3><img src="${base}/product.png" onerror="this.src='images/no-image.png'"></div>
+${p.text?`<div class="info-text">${p.text}</div>`:""}
+<div class="card"><h3>Маълумот</h3><img src="${base}/pest.jpg" onerror="this.src='images/no-image.png'"></div>
+</div><div class="nav-btn" onclick="list('${k}')">⬅ ОРҚАГА</div>`;
 }
 
-showHome();
+home();
 </script>
 </body>
 </html>
