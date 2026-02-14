@@ -53,9 +53,16 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 // ФУНКЦИЯ ЗВОНКА (Работает через API Telegram)
-function makeCall(phone) {
+unction makeCall(phone) {
     const cleanPhone = phone.replace(/[^\d+]/g, ''); 
-    tg.openLink("tel:" + cleanPhone);
+    
+    // Показываем нативное окно Telegram для подтверждения
+    tg.showConfirm("Қўнғироқ қилмоқчимисиз: " + phone + "?", function(ok) {
+        if (ok) {
+            // Если нажал "ОК", вызываем ссылку принудительно
+            tg.openLink("tel:" + cleanPhone);
+        }
+    });
 }
 
 // ФУНКЦИЯ ЗУМА
